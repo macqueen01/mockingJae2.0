@@ -19,8 +19,9 @@
         grid-row: 2;
         grid-column: 1;
         font-family: latoThin;
-        letter-spacing: 5.5px;
-        font-size: 13px;
+        letter-spacing: 6px;
+        font-size: 11px;
+        text-justify: center;
         width: fit-content;
         height: fit-content;
     }
