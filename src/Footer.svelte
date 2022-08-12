@@ -15,12 +15,12 @@
     .footer {
         position: relative;
         display: grid;
-        margin-top: 3px;
+        margin-top: 5px;
         grid-row: 2;
         grid-column: 1;
         font-family: latoThin;
-        letter-spacing: 6px;
-        font-size: 11px;
+        letter-spacing: 6.5px;
+        font-size: 8px;
         text-justify: center;
         width: fit-content;
         height: fit-content;
@@ -42,7 +42,7 @@
 <div class="footer-container">
     <div class="footer-wrap">
         <div class="footer">
-            <p>signiture of</p>
+            <p>SIGNITURE OF</p>
             <img src="/icons/Jae.png" height="40">
         </div>
     </div>
