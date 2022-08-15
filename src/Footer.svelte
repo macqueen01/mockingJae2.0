@@ -18,7 +18,7 @@
         margin-top: 5px;
         grid-row: 2;
         grid-column: 1;
-        font-family: latoThin;
+        font-family: latoRegular;
         letter-spacing: 6.5px;
         font-size: 8px;
         text-justify: center;
@@ -32,7 +32,6 @@
 
     img {
         position: absolute;
-        
         padding-top: 20px;
         margin-left: auto;
         margin-right: auto;

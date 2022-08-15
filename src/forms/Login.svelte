@@ -72,10 +72,14 @@
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: 70%;
+        height: 65%;
         margin: 0;
         padding: 0;
         
+    }
+    
+    .login-input {
+        padding-bottom: 20px;
     }
     
     .actions {
@@ -103,6 +107,7 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
+        padding-bottom: 8px;
     }
     
     .first, .second {
@@ -135,10 +140,21 @@
     }
     
     .login-button {
-
-        width: 100%;
-        height: 80%;
-                
+        background-image: url('/icons/loginBox.png');
+        background-size: cover;
+        background-color: transparent;
+        border: none;
+        width: 120px;
+        height: 40px;               
+    }
+    
+    .signin-button {
+        background-image: url('/icons/signinBox.png');
+        background-size: cover;
+        background-color: transparent;
+        border: none;
+        width: 120px;
+        height: 40px;                
     }
 
 </style>
@@ -155,16 +171,14 @@
                 <div class="login-form">
                     <form action="/login" method="POST">
                         <div class="login-input">
-                            <input type="text" name="username" placeholder="Your phone number or email">
+                            <input type="text" name="username" placeholder="Your phone number or email" required>
                         </div>
                         <div class="login-input">
-                            <input type="password" name="password" placeholder="Password">
+                            <input type="password" name="password" placeholder="Password" required>
                         </div>
                         <div class="actions">
-                          <div class="login-button-wrap">
-                              
-                              <img src="/icons/Box_1.png" height="60" width="110">
-                              
+                          <div class="login-button-wrap">                              
+                              <button class="login-button" type="submit"></button>                              
                           </div>
                           <div class="or">
                               <hr class="first">
@@ -172,7 +186,7 @@
                               <hr class="second">
                           </div>
                           <div class="signin-button-wrap">
-                              <img src="/icons/Box_1.png" height="60" width="110">
+                              <button class="signin-button"></button>
                           </div>
                         </div>
                     </form>
