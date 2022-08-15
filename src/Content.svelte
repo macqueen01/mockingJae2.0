@@ -13,7 +13,7 @@
 </style>
 
 <script>
-    import Login from "./Login.svelte";
+    import Login from "./forms/Login.svelte";
 </script>
 
 
