@@ -14,6 +14,33 @@
 
 <script>
     import Login from "./forms/Login.svelte";
+    import SignIn from './forms/SignIn.svelte';
+    import Loading from "./Loading.svelte";
+    
+    
+    let loaded = false;
+    
+    $: {
+        if (!loaded) {
+            setTimeout(() => {
+                loaded = true;
+            }, 2000)
+        }
+        
+        console.log("loaded: ", loaded)
+    }
+    
+    $: signIn = false;
+    
+    
+    
+    function modeChange(e) {
+        signIn = e.detail.signIn;
+        loaded = false;
+        console.log("loaded: ", loaded, "signIn: ", signIn)
+
+    }
+    
 </script>
 
 
@@ -21,7 +48,13 @@
 
 
 <div class="content-container">
-    <Login />
+    {#if loaded && !signIn} 
+        <Login on:mode={modeChange} />
+    {:else if signIn && loaded}
+        <SignIn />
+    {:else if !loaded}
+        <Loading />
+    {/if}
 </div>
 
 

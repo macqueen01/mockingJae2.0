@@ -156,13 +156,32 @@
         width: 120px;
         height: 40px;                
     }
+    
+    button:active {
+        background-color: transparent;
+        border: none;
+    }
 
 </style>
 
+<script>
+
+    import { createEventDispatcher } from 'svelte';
+    
+    var dispatch = createEventDispatcher();
+
+    function switchToSignIn() {
+        console.log("switching to signIn")
+        dispatch('mode', {
+            signIn: true
+        });
+    }
+
+</script>
 
 <div class="content-wrap">
     <div class="login-container">
-            <div class="login-wrap">
+                <div class="login-wrap">
             <div class="login">
                 <div class="login-title">
                     <img src="/icons/Jae.png" height="55">
@@ -171,10 +190,10 @@
                 <div class="login-form">
                     <form action="/login" method="POST">
                         <div class="login-input">
-                            <input type="text" name="username" placeholder="Your phone number or email" required>
+                            <input type="text" name="username" placeholder="Your phone number or email">
                         </div>
                         <div class="login-input">
-                            <input type="password" name="password" placeholder="Password" required>
+                            <input type="password" name="password" placeholder="Password">
                         </div>
                         <div class="actions">
                           <div class="login-button-wrap">                              
@@ -186,7 +205,7 @@
                               <hr class="second">
                           </div>
                           <div class="signin-button-wrap">
-                              <button class="signin-button"></button>
+                              <button class="signin-button" on:click={switchToSignIn}></button>
                           </div>
                         </div>
                     </form>

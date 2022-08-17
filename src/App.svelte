@@ -3,6 +3,11 @@
 	import Container from "./Content.svelte";
 	import Content from "./Content.svelte";
 	import Footer from "./Footer.svelte";
+	
+	$: loggedIn = false;
+	
+	
+	
 </script>
 
 
@@ -30,7 +35,7 @@
 </style>
 
 <main>
-	<Navbar />
+	<Navbar logged/>
 	<Content />
 	<Footer />
 </main>
