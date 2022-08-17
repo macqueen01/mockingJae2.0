@@ -33,7 +33,7 @@
         height: 80%;
         margin: 0;
         padding: 0;
-        background-color: beige;
+        border-bottom: thin solid gray;
     }
     
     .sub-navbar-wrap {
@@ -82,6 +82,58 @@
         border: none;
     }
     
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+        width :100%;
+        margin: 0;
+        padding: 0;
+        
+    }
+    
+    .name-field, .name-field:focus {
+        background-color: transparent;
+        border: none;
+        outline: none;
+    }
+    
+    .field-wrap {
+        width: fit-content;
+        height: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        background-color: whitesmoke;
+        
+    }
+    
+    .form-wrap {
+        width: fit-content;
+        height: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .questionair-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        width: 80%;
+        height: 40%;
+        background-color: whitesmoke;
+        
+    }
+  
+    
     
 
 
@@ -105,8 +157,9 @@
                 </div>
                
                 <div class="form-wrap">
-                    
-                    <input id="name" name="name" class="name-field" bind:value={name}>
+                    <div class="field-wrap">
+                        <input id="name" name="name" class="name-field" bind:value={name}>
+                    </div>
                 </div>
             </div>
             
