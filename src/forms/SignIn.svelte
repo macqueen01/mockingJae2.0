@@ -33,7 +33,6 @@
         height: 80%;
         margin: 0;
         padding: 0;
-        border-bottom: thin solid gray;
     }
     
     .sub-navbar-wrap {
@@ -103,12 +102,12 @@
     .field-wrap {
         width: fit-content;
         height: fit-content;
-        display: flex;
+        display: flex hidden;
         justify-content: center;
         align-items: center;
         margin: 0;
         padding: 0;
-        background-color: whitesmoke;
+        background-color: transparent;
         
     }
     
@@ -116,6 +115,7 @@
         width: fit-content;
         height: 30%;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         margin: 0;
@@ -125,12 +125,67 @@
     .questionair-container {
         display: flex;
         justify-content: center;
+        flex-direction: column;
         align-items: center;
-        
-        width: 80%;
+        width: 65%;
         height: 40%;
-        background-color: whitesmoke;
-        
+        font-family: latoRegular;
+        font-size: 20px;
+        text-align: center;
+    }
+    
+    .name-field {
+        display: hidden;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+        padding-bottom: 3px;
+        font-size: 20px;
+        font-family: latoThin;
+    }
+    
+    .name-requirement-container {
+        width: 60%;
+        height: 150px;
+        padding: 0;
+        margin: 0;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+    }
+    
+    p {
+        font-family: latoRegular;
+        font-size: 13px;
+        padding: 0;
+        margin: 0;
+        padding-left: 3px;
+        padding-bottom: 20px;
+    }
+    
+    h1 {
+        font-size: 23px;
+        color: gray;
+    }
+    
+    h2 {
+        font-size: 20px;
+    }
+    
+    .requirement-wrap {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+    }
+    
+    .icon-wrap {
+        height: 100%;
+        width: fit-content;
+        padding-right: 5px;
     }
   
     
@@ -145,6 +200,36 @@
     let email = "";
     let password = "";
     let stage = "name-stage";
+    let name_rule_detail = {
+        is_long_enough: false,
+        is_short_enough: true,
+        no_whitespace: true
+    }
+    let name_rule_result = false;
+    
+    
+    function name_rule(name) {
+        let whitespace = /\s/;
+        let name_regex_result = !whitespace.test(name);
+        let min_len = 3;
+        let max_len = 10;
+        let name_len = name.length;
+        let detail = {};
+        detail.is_long_enough = name_len >= min_len;
+        detail.is_short_enough = name_len <= max_len;
+        detail.no_whitespace = name_regex_result;
+        name_rule_detail = detail;
+        console.log(name)
+    }
+
+
+    $: {
+            name_rule(name);
+            name_rule_result = name_rule_detail.is_long_enough && name_rule_detail.is_short_enough && name_rule_detail.no_whitespace;
+            console.log(name_rule_result);
+            console.log(name);
+    }
+    
 
 </script>
 
@@ -154,22 +239,63 @@
         
             <div class="container">
                 <div class="questionair-container">
+                    {#if name == ""}
+                        What are you called ?
+                    {:else if name_rule_result}
+                        <h1>{name}</h1>
+                        <h2>are you sure ?</h2>
+                    {:else}
+                        Name is not valid enough ...
+                    {/if}
                 </div>
                
                 <div class="form-wrap">
                     <div class="field-wrap">
                         <input id="name" name="name" class="name-field" bind:value={name}>
+                        
                     </div>
+                    <img src="/icons/crop_bar.png" height="4" width="200">
+                    
+                </div>
+                <div class="name-requirement-container">
+                    {#if !name_rule_detail.is_long_enough}
+                        <div class="requirement-wrap">
+                            <div class="icon-wrap">
+                                <img src="/icons/Me.png" height="13">
+                            </div>
+                            <p>Too short! Make it longer than 2 letters.</p>
+                        </div>
+                    {/if}
+                    {#if !name_rule_detail.is_short_enough}
+                        <div class="requirement-wrap">
+                            <div class="icon-wrap">
+                                <img src="/icons/Me.png" height="13">
+                            </div>
+                            <p>Too long! Make it shorter than 11 letters.</p>
+                        </div>
+                    {/if}
+                    {#if !name_rule_detail.no_whitespace}
+                        <div class="requirement-wrap">
+                            <div class="icon-wrap">
+                                <img src="/icons/Me.png" height="13">
+                            </div>
+                        <p>No whitespace is allowed.</p>
+                        </div>
+                    {/if}
                 </div>
             </div>
             
         </div>
         <div class="sub-navbar-wrap">
             <div class="sub-navbar-left">
-                <button class="nav-left"></button> 
+                {#if stage != "name-stage"}
+                    <button class="nav-left"></button> 
+                {/if}
             </div>
             <div class="sub-navbar-right">
-                <button class="nav-right"></button>
+                {#if (stage == "name-stage") && (name != "") && name_rule_result}
+                    <button class="nav-right"></button>
+                {/if}
             </div>
         </div>
     </div>
