@@ -1,26 +1,27 @@
 <script>
-    export let stage;
-    export let name = "";
+    export let stage = 0;
+    export let name;
 
     import { createEventDispatcher } from 'svelte';
     
     var dispatch = createEventDispatcher();
 
-    function bubbleUpName(name) {
+    function bubbleUpName() {
         console.log("bubble up name...")
-        dispatch('user-name', {
-            name: name
+        stage = 2; 
+        dispatch('userName', {
+            name: name,
+            stage: stage
         });
     }
 
-    
     let name_rule_detail = {
         is_long_enough: false,
         is_short_enough: true,
         no_whitespace: true
     }
-    let name_rule_result = false;
     
+    let name_rule_result = false;    
     
     function name_rule(name) {
         let whitespace = /\s/;
@@ -36,13 +37,9 @@
         console.log(name)
     }
 
-
     $: {
             name_rule(name);
             name_rule_result = name_rule_detail.is_long_enough && name_rule_detail.is_short_enough && name_rule_detail.no_whitespace;
-            console.log(name_rule_result);
-            console.log(name);
-            bubbleUpName(name)
             
     }
 
@@ -231,74 +228,73 @@
 
 
 
-       <div class="set-user-name-wrap">
-            <div class="container">
-                <div class="questionair-container">
-                    {#if name == ""}
-                        What are you called ?
-                    {:else if name_rule_result}
-                        <h1>{name}</h1>
-                        <h2>are you sure ?</h2>
-                    {:else}
-                        Name is not valid enough ...
-                    {/if}
-                </div>
-               
-                <div class="form-wrap">
-                    <div class="field-wrap">
-                        <input id="name" name="name" class="name-field" bind:value={name}>
+<div class="set-user-name-wrap">
+    <div class="container">
+        <div class="questionair-container">
+             {#if name == ""}
+                What are you called ?
+             {:else if name_rule_result}
+                <h1>{name}</h1>
+                <h2>are you sure ?</h2>
+            {:else}
+                Name is not valid enough ...
+            {/if}
+        </div>
+       
+        <div class="form-wrap">
+            <div class="field-wrap">
+                <input id="name" name="name" class="name-field" bind:value={name}>
                         
-                    </div>
-                    <img src="/icons/crop_bar.png" height="4" width="200">
-                    
-                </div>
-                <div class="name-requirement-container">
-                    {#if !name_rule_detail.is_long_enough}
-                        <div class="requirement-wrap">
-                            <div class="icon-wrap">
-                                <img src="/icons/svgs/cross.svg" width="13px" height="13px">
-                                
-                            </div>
-                            <p>Too short! Make it longer than 2 letters.</p>
-                        </div>
-                    {/if}
-                    {#if !name_rule_detail.is_short_enough}
-                        <div class="requirement-wrap">
-                            <div class="icon-wrap">
-                                <img src="/icons/svgs/cross.svg" width="13px" height="13px">
-                            </div>
-                            <p>Too long! Make it shorter than 11 letters.</p>
-                        </div>
-                    {/if}
-                    {#if !name_rule_detail.no_whitespace}
-                        <div class="requirement-wrap">
-                            <div class="icon-wrap">
-                                <img src="/icons/svgs/cross.svg" width="13px" height="13px">
-                            </div>
-                        <p>No whitespace is allowed.</p>
-                        </div>
-                    {/if}
-                    {#if name_rule_result}
-                        <div class="requirement-wrap-check">
-                            <div class="icon-wrap">
-                                <img src="/icons/svgs/check.svg" width="13px" height="13px">
-                            </div>
-                        <p>All requirements met!</p>
-                        </div>
-                    {/if}
-                </div>
             </div>
+            <img src="/icons/crop_bar.png" height="4" width="200">
             
         </div>
-        <div class="sub-navbar-wrap">
-            <div class="sub-navbar-left">
-                {#if stage != "name-stage"}
-                    <button class="nav-left"></button> 
-                {/if}
-            </div>
-            <div class="sub-navbar-right">
-                {#if (stage == "name-stage") && (name != "") && name_rule_result}
-                    <button class="nav-right"></button>
-                {/if}
-            </div>
+        <div class="name-requirement-container">
+            {#if !name_rule_detail.is_long_enough}
+                <div class="requirement-wrap">
+                    <div class="icon-wrap">
+                        <img src="/icons/svgs/cross.svg" width="13px" height="13px">
+                    </div>
+                    <p>Too short! Make it longer than 2 letters.</p>
+                </div>
+            {/if}
+            {#if !name_rule_detail.is_short_enough}
+                <div class="requirement-wrap">
+                    <div class="icon-wrap">
+                        <img src="/icons/svgs/cross.svg" width="13px" height="13px">
+                    </div>
+                    <p>Too long! Make it shorter than 11 letters.</p>
+                </div>
+            {/if}
+            {#if !name_rule_detail.no_whitespace}
+                <div class="requirement-wrap">
+                    <div class="icon-wrap">
+                        <img src="/icons/svgs/cross.svg" width="13px" height="13px">
+                    </div>
+                <p>No whitespace is allowed.</p>
+                </div>
+            {/if}
+            {#if name_rule_result}
+                <div class="requirement-wrap-check">
+                    <div class="icon-wrap">
+                        <img src="/icons/svgs/check.svg" width="13px" height="13px">
+                    </div>
+                <p>All requirements met!</p>
+                </div>
+            {/if}
         </div>
+    </div>
+            
+</div>
+<div class="sub-navbar-wrap">
+    <div class="sub-navbar-left">
+        {#if stage != "name-stage"}
+            <button class="nav-left"></button> 
+        {/if}
+    </div>
+    <div class="sub-navbar-right">
+        {#if (stage == 0) && (name != "") && name_rule_result}
+        <button class="nav-right" on:click={bubbleUpName}></button>
+        {/if}
+    </div>
+</div>
