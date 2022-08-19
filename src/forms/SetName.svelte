@@ -1,29 +1,55 @@
+<script>
+    export let stage;
+    export let name = "";
+
+    import { createEventDispatcher } from 'svelte';
+    
+    var dispatch = createEventDispatcher();
+
+    function bubbleUpName(name) {
+        console.log("bubble up name...")
+        dispatch('user-name', {
+            name: name
+        });
+    }
+
+    
+    let name_rule_detail = {
+        is_long_enough: false,
+        is_short_enough: true,
+        no_whitespace: true
+    }
+    let name_rule_result = false;
+    
+    
+    function name_rule(name) {
+        let whitespace = /\s/;
+        let name_regex_result = !whitespace.test(name);
+        let min_len = 3;
+        let max_len = 10;
+        let name_len = name.length;
+        let detail = {};
+        detail.is_long_enough = name_len >= min_len;
+        detail.is_short_enough = name_len <= max_len;
+        detail.no_whitespace = name_regex_result;
+        name_rule_detail = detail;
+        console.log(name)
+    }
+
+
+    $: {
+            name_rule(name);
+            name_rule_result = name_rule_detail.is_long_enough && name_rule_detail.is_short_enough && name_rule_detail.no_whitespace;
+            console.log(name_rule_result);
+            console.log(name);
+            bubbleUpName(name)
+            
+    }
+
+</script>
+
 <style>
-    .content-wrap {
-        width: 300px;
-        height: 500px;
-        /* minimalistic design of a container with rounded corner and subtle color and shadow. 
-        places the container inside this one center */
 
-        border-radius: 2px;
-        box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
-        background-color: white;
-        margin: 0;
-        padding: 0;
-
-    }
-
-    /* style of login continer. centers all items inside */
-    .signin-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
     
     .set-user-name-wrap {
         display: flex;
@@ -201,52 +227,11 @@
     }
     
 
-
 </style>
 
-<script>
-
-    let name = "";
-    let email = "";
-    let password = "";
-    let stage = "name-stage";
-    let name_rule_detail = {
-        is_long_enough: false,
-        is_short_enough: true,
-        no_whitespace: true
-    }
-    let name_rule_result = false;
-    
-    
-    function name_rule(name) {
-        let whitespace = /\s/;
-        let name_regex_result = !whitespace.test(name);
-        let min_len = 3;
-        let max_len = 10;
-        let name_len = name.length;
-        let detail = {};
-        detail.is_long_enough = name_len >= min_len;
-        detail.is_short_enough = name_len <= max_len;
-        detail.no_whitespace = name_regex_result;
-        name_rule_detail = detail;
-        console.log(name)
-    }
 
 
-    $: {
-            name_rule(name);
-            name_rule_result = name_rule_detail.is_long_enough && name_rule_detail.is_short_enough && name_rule_detail.no_whitespace;
-            console.log(name_rule_result);
-            console.log(name);
-    }
-    
-
-</script>
-
-<div class="content-wrap">
-    <div class="signin-container">
-        <div class="set-user-name-wrap">
-        
+       <div class="set-user-name-wrap">
             <div class="container">
                 <div class="questionair-container">
                     {#if name == ""}
@@ -317,6 +302,3 @@
                 {/if}
             </div>
         </div>
-    </div>
-    
-</div>
