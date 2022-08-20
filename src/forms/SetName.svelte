@@ -152,7 +152,6 @@
         align-items: center;
         width: 65%;
         height: 40%;
-        font-family: latoRegular;
         font-size: 20px;
         text-align: center;
     }
@@ -164,7 +163,7 @@
         margin: 0;
         padding-bottom: 3px;
         font-size: 20px;
-        font-family: latoThin;
+        font-family: popRegular;
     }
     
     .name-requirement-container {
@@ -187,13 +186,14 @@
         padding-bottom: 20px;
     }
     
-    h1 {
-        font-family: latoBold;
-        font-size: 27px;
+    :global(h1) {
+        font-family: popRegular;
+        font-size: 25px;
         color: gray;
     }
     
-    h2 {
+    :global(h2) {
+        font-family: popRegular;
         font-size: 20px;
     }
     
@@ -232,12 +232,12 @@
     <div class="container">
         <div class="questionair-container">
              {#if name == ""}
-                What are you called ?
+                <h2>What are you called?</h2>
              {:else if name_rule_result}
                 <h1>{name}</h1>
-                <h2>are you sure ?</h2>
+                <h2>are you sure?</h2>
             {:else}
-                Name is not valid enough ...
+                <h2>Name is not valid enough...</h2>
             {/if}
         </div>
        
@@ -279,7 +279,7 @@
                     <div class="icon-wrap">
                         <img src="/icons/svgs/check.svg" width="13px" height="13px">
                     </div>
-                <p>All requirements met!</p>
+                <p>Good to go!</p>
                 </div>
             {/if}
         </div>

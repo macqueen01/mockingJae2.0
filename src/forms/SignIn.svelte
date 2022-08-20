@@ -63,6 +63,10 @@
         console.log("password reset:", password);
     }
     
+    function goBackHandler(e) {
+        stage = e.detail.stage;
+        console.log("going back from password stage")
+    }
 
     
 
@@ -75,7 +79,7 @@
         {:else if stage == 1}
             <SetEmail on:userEmail={resetEmail} email={email} stage={stage} />
         {:else if stage == 2}
-            <SetPassword on:userPassword={resetPassword} stage={stage} />
+            <SetPassword on:userPassword={resetPassword} stage={stage} on:goBack={goBackHandler} />
         {:else}
             Error
         {/if}

@@ -148,8 +148,6 @@
         align-items: center;
         width: 65%;
         height: 40%;
-        font-family: latoRegular;
-        font-size: 20px;
         text-align: center;
     }
     
@@ -160,7 +158,7 @@
         margin: 0;
         padding-bottom: 3px;
         font-size: 15px;
-        font-family: latoThin;
+        font-family: popRegular;
     }
     
     .email-requirement-container {
@@ -182,15 +180,6 @@
         padding-bottom: 20px;
     }
     
-    h1 {
-        font-family: latoBold;
-        font-size: 27px;
-        color: gray;
-    }
-    
-    h2 {
-        font-size: 20px;
-    }
     
     .requirement-wrap {
         width: 100%;
@@ -227,11 +216,11 @@
     <div class="container">
         <div class="questionair-container">
              {#if email == ""}
-                What email address do you use ?
+                <h2>What email address do you use?</h2>
              {:else if email_rule_result}
-                <h2>You sure this is your email ?</h2>
+                <h2>You sure this is your email?</h2>
             {:else}
-                Email is not valid enough ...
+                <h2>Email is not valid enough...</h2>
             {/if}
         </div>
        

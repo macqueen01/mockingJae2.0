@@ -25,14 +25,61 @@
 }
 
 @font-face {
-	font-family: latoLight;
-	src: url("/fonts/Lato/Lato-Light.ttf");
+    font-family: latoThin;
+    src: url("/fonts/Lato/Lato-Thin.ttf");
 }
 
 @font-face {
-	font-family: latoThin;
-	src: url("/fonts/Lato/Lato-Thin.ttf");
+	font-family: popBlack;
+	src: url("/fonts/Poppins/Poppins-Black.ttf");
 }
+
+@font-face {
+	font-family: popBold;
+	src: url("/fonts/Poppins/Poppins-Bold.ttf");
+}
+
+@font-face {
+	font-family: popExtraBold;
+	src: url("/fonts/Poppins/Poppins-ExtraBold.ttf");
+}
+
+@font-face {
+	font-family: popExtraLight;
+	src: url("/fonts/Poppins/Poppins-ExtraLight.ttf");
+}
+
+@font-face {
+	font-family: popLight;
+	src: url("/fonts/Poppins/Poppins-Light.ttf");
+}
+
+@font-face {
+	font-family: popMedium;
+	src: url("/fonts/Poppins/Poppins-Medium.ttf");
+}
+
+@font-face {
+	font-family: popRegular;
+	src: url("/fonts/Poppins/Poppins-Regular.ttf");
+}
+
+@font-face {
+	font-family: popSemiBold;
+	src: url("/fonts/Poppins/Poppins-SemiBold.ttf");
+}
+
+@font-face {
+	font-family: popThin;
+	src: url("/fonts/Poppins/Poppins-Thin.ttf");
+}
+
+@font-face {
+	font-family: bauhaus;
+	src: url("/fonts/BauhausRegular.ttf");
+}
+
+
 
 
 html, body {

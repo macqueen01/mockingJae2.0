@@ -50,7 +50,10 @@
     function goBack() {
         if (check_password_mode == 0 && stage == 2) {
             console.log("Go back to stage", stage-1);
-            stage = stage - 1;     
+            stage = stage - 1;
+            dispatch('goBack', {
+                stage: stage
+            })
         } else if (check_password_mode == 1 && stage == 2) {
             console.log("Go back to change the draft password");
             check_password_mode = 0;
@@ -68,7 +71,7 @@
         let no_whitespace_rule = /\s/;
         let detail = {}
         
-        detail.has_uppercase = uppercase_rule.text(password);
+        detail.has_uppercase = uppercase_rule.test(password);
         detail.long_enough = min_rule;
         detail.has_specialcase = specialcase_rule.test(password);
         detail.no_whitespace = !no_whitespace_rule.test(password);
@@ -79,7 +82,8 @@
     $: {
         password_rule(password_container);
         console.log("password:", password);
-        console.log("password rule result:", password_rule_result);
+        console.log("password rule result:", password_rule_result);  
+        password_rule_result = password_rule_detail.has_uppercase && password_rule_detail.long_enough && password_rule_detail.has_specialcase && password_rule_detail.no_whitespace;      
     }
 
 </script>
@@ -191,8 +195,6 @@
         align-items: center;
         width: 65%;
         height: 40%;
-        font-family: latoRegular;
-        font-size: 20px;
         text-align: center;
     }
     
@@ -222,19 +224,10 @@
         padding: 0;
         margin: 0;
         padding-left: 3px;
-        padding-bottom: 20px;
+        padding-bottom: 13px;
     }
     
-    h1 {
-        font-family: latoBold;
-        font-size: 27px;
-        color: gray;
-    }
-    
-    h2 {
-        font-size: 20px;
-    }
-    
+
     .requirement-wrap {
         width: 100%;
         height: fit-content;
@@ -271,22 +264,22 @@
         <div class="questionair-container">
             {#if check_password_mode == 0}
                 {#if password_container == ""}
-                    What email address do you use ?
+                    <h2>Set a magic password !</h2>
                 {:else if password_rule_result}
-                    <h2>Make sure you internalize this magic password ...</h2>
+                    <h2>Make sure you internalize this magic password</h2>
                 {:else}
-                    Password not strong enough ...
+                    <h2>Password not strong enough ...</h2>
                 {/if}
             {:else if check_password_mode == 1}
                 {#if password_container == ""}
-                    Now is time to check. Type again !
+                    <h2>Now is time to check. Type again !</h2>
                 {:else if password == password_container}
-                    LASTLY !
+                    <h2>LASTLY !</h2>
                 {:else}
-                    Password doesn't seem to match ... You sure ?
+                    <h2>Password doesn't seem to match ... You sure ?</h2>
                 {/if}
             {:else}
-                Mode Error. Something went wrong ...
+                <h2>Mode Error. Something went wrong ...</h2>
             {/if}
         </div>
        
