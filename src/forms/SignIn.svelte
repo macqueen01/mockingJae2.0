@@ -35,19 +35,34 @@
 <script>
 
     import SetName from "./SetName.svelte";
+    import SetEmail from "./SetEmail.svelte";
+    import SetPassword from "./SetPassword.svelte";
     
 
     let name = "";
     let email = "";
     let password = "";
-    let stage = 0;
+    $: stage = 0;
     
 
     function resetName(e) {
         name = e.detail.name;
-        console.log("name reset:", name)
+        stage = e.detail.stage;
+        console.log("name reset:", name);
+    }
+    
+    function resetEmail(e) {
+        email = e.detail.email;
+        stage = e.detail.stage;
+        console.log("email reset:", email);
     }
 
+    function resetPassword(e) {
+        password = e.detail.password;
+        stage = e.detail.stage;
+        console.log("password reset:", password);
+    }
+    
 
     
 
@@ -57,7 +72,12 @@
     <div class="signin-container">
         {#if stage == 0}
             <SetName on:userName={resetName} name={name} stage={stage} />
+        {:else if stage == 1}
+            <SetEmail on:userEmail={resetEmail} email={email} stage={stage} />
+        {:else if stage == 2}
+            <SetPassword on:userPassword={resetPassword} stage={stage} />
+        {:else}
+            Error
         {/if}
     </div>
-    
 </div>

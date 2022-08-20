@@ -8,7 +8,7 @@
 
     function bubbleUpName() {
         console.log("bubble up name...")
-        stage = 2; 
+        stage = 1; 
         dispatch('userName', {
             name: name,
             stage: stage
@@ -288,7 +288,7 @@
 </div>
 <div class="sub-navbar-wrap">
     <div class="sub-navbar-left">
-        {#if stage != "name-stage"}
+        {#if stage != 0}
             <button class="nav-left"></button> 
         {/if}
     </div>
