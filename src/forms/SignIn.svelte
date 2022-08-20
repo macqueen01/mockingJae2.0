@@ -24,6 +24,14 @@
         margin: 0;
         padding: 0;
     }
+    
+    h3 {
+        font-family: popLight;
+        font-size: 25px;
+        padding: 0;
+        margin: 0;
+        margin-bottom: 10px;
+    }
 
     
 
@@ -34,14 +42,22 @@
 
 <script>
 
-    import SetName from "./SetName.svelte";
-    import SetEmail from "./SetEmail.svelte";
-    import SetPassword from "./SetPassword.svelte";
+    import { createEventDispatcher } from 'svelte';
+
+    import SetName from "./SignInComponents/SetName.svelte";
+    import SetEmail from "./SignInComponents/SetEmail.svelte";
+    import SetPassword from "./SignInComponents/SetPassword.svelte";
     
 
     let name = "";
     let email = "";
     let password = "";
+    
+    var dispatch = createEventDispatcher();
+    
+    //stage starts from 0 to 3 where stage 3 sends POST request
+    //to the server with the info gathered through stage 0 to 2.
+    //initialized at stage 0.
     $: stage = 0;
     
 
@@ -67,6 +83,16 @@
         stage = e.detail.stage;
         console.log("going back from password stage")
     }
+    
+    $: {
+        if (stage == 3) {
+            setTimeout(() => {
+                dispatch('mode', {
+                    signIn: false
+                })
+            }, 5000);
+        }
+    }
 
     
 
@@ -81,7 +107,8 @@
         {:else if stage == 2}
             <SetPassword on:userPassword={resetPassword} stage={stage} on:goBack={goBackHandler} />
         {:else}
-            Error
+            <h3>WELCOME TO</h3>
+            <img src="/icons/Jae.png" height="60">
         {/if}
     </div>
 </div>

@@ -51,7 +51,7 @@
     {#if loaded && !signIn} 
         <Login on:mode={modeChange} />
     {:else if signIn && loaded}
-        <SignIn />
+        <SignIn on:mode={modeChange} />
     {:else if !loaded}
         <Loading />
     {/if}

@@ -118,8 +118,6 @@
         border-width: 0;
         color: gray;
         background-color: gray;
-        
-        
     }
     
     .middle {
@@ -147,6 +145,7 @@
         width: 120px;
         height: 40px;               
     }
+    
     
     .signin-button {
         background-image: url('/icons/signinBox.png');

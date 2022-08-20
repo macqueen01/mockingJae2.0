@@ -246,7 +246,7 @@
                     <div class="icon-wrap">
                         <img src="/icons/svgs/check.svg" width="13px" height="13px">
                     </div>
-                <p>Good to go!</p>
+                    <p>Good to go!</p>
                 </div>
             {/if}
         </div>

@@ -35,7 +35,7 @@
 </style>
 
 <main>
-	<Navbar logged/>
+	<Navbar />
 	<Content />
 	<Footer />
 </main>
