@@ -5,7 +5,7 @@
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: 90%;
+        height: 100%;
         background-color: whitesmoke;
         margin: 0;
         padding: 0;
@@ -24,7 +24,7 @@
         if (!loaded) {
             setTimeout(() => {
                 loaded = true;
-            }, 2000)
+            }, 5000)
         }
         
         console.log("loaded: ", loaded)
