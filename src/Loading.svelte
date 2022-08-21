@@ -17,5 +17,5 @@
 </style>
 
 <div class="pizza-spinner-wrap">
-    <img src="/icons/pizzaSpinner.png" height="60" width="60" class="pizza-spinner">
+    <img src="/icons/svgs/pizzaSpinner.svg" height="60" width="60" class="pizza-spinner">
 </div>

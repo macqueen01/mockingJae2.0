@@ -42,7 +42,7 @@
     <div class="footer-wrap">
         <div class="footer">
             <p>SIGNITURE OF</p>
-            <img src="/icons/Jae.png" height="40">
+            <img src="/icons/svgs/Jae.svg" height="40">
         </div>
     </div>
 </div>

@@ -105,7 +105,7 @@
             <SetPassword on:userPassword={resetPassword} stage={stage} on:goBack={goBackHandler} />
         {:else}
             <h3>WELCOME TO</h3>
-            <img src="/icons/Jae.png" height="60">
+            <img src="/icons/svgs/Jae.svg" height="60">
         {/if}
     </div>
 </div>

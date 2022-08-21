@@ -28,20 +28,11 @@
         margin: 0;
         padding: 0;
         padding-top: 65px;
+        margin-bottom: 30px;
         
 
     }
     
-    .login-divider {
-      width: 65%;
-      margin: auto;
-      padding: auto;
-      margin-top: 40px;
-      height: 2px;
-      border-width: 0;
-      color: gray;
-      background-color: gray;
-    }
 
     /* style of login form. sections login-wrap and login-form with subtle line */
     .login-wrap {
@@ -142,7 +133,7 @@
     }
     
     .login-button {
-        background-image: url('/icons/loginBox.png');
+        background-image: url('/icons/svgs/loginBox.svg');
         background-size: cover;
         background-color: transparent;
         border: none;
@@ -152,7 +143,7 @@
     
     
     .signin-button {
-        background-image: url('/icons/signinBox.png');
+        background-image: url('/icons/svgs/signinBox.svg');
         background-size: cover;
         background-color: transparent;
         border: none;
@@ -245,15 +236,14 @@
                 <div class="login-wrap">
             <div class="login">
                 <div class="login-title">
-                    <img src="/icons/Jae.png" height="55">
+                    <img src="/icons/svgs/Jae.svg" height="55">
                 </div>
-                <hr class="login-divider">
                 <div class="login-form">
                     <form action="/login" method="POST">
                         <div class="login-input">
                             <label for="username" class="{email.length == 0 ? 'username-label' : 'username-label-filled'}">Your email</label>
                             <input class="email-input" type="text" name="username" required bind:value={email}>
-                            <img src="/icons/crop_bar.png" height="4" width="200">
+                            <img src="/icons/crop_bar.png" height="4" width="200" >
                         </div>
                         <div class="login-input">
                             <label for="password" class="{password.length == 0 ? 'password-label' : 'password-label-filled'}">Password</label>                                       

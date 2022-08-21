@@ -87,7 +87,7 @@
     }
     
     .nav-left, .nav-right {
-        background-image: url('/icons/arrowToLeft.png');
+        background-image: url('/icons/svgs/arrowToLeft.svg');
         background-size: cover;
         background-color: transparent;
         border: none;

@@ -48,17 +48,17 @@
 <div class="navbar">
     <div class="nav-content-wrap">
         <div class="logo-wrap">
-            <img src="/icons/Me.png" height="30" alt="JAE">
+            <img src="/icons/svgs/Me.svg" height="30" alt="JAE">
         </div>
         <div class="menu-wrap">
             <div class="home-wrap">
-                <img src="/icons/Home.png" height="30" alt="home">
+                <img src="/icons/svgs/Home.svg" height="30" alt="home">
             </div>
             <div class="global-wrap">
-                <img src="/icons/Global.png" height="30" alt="global">
+                <img src="/icons/svgs/Global.svg" height="30" alt="global">
             </div>
             <div class="dm-wrap">
-                <img src="/icons/Dm.png" height="30" alt="dm">
+                <img src="/icons/svgs/Dm.svg" height="30" alt="dm">
             </div>       
         </div>
     </div>
