@@ -204,13 +204,15 @@
         padding: 0;
         margin: 0;
         padding-bottom: 3px;
-        font-size: 15px;
-        font-family: latoThin;
+        font-size: 12px;
+        font-family: popRegular;
     }
     
     .password-requirement-container {
         width: 60%;
         height: 150px;
+        position: relative;
+        top: -10px;
         padding: 0;
         margin: 0;
         display: flex;
@@ -219,8 +221,8 @@
     }
     
     p {
-        font-family: latoRegular;
-        font-size: 13px;
+        font-family: popRegular;
+        font-size: 12px;
         padding: 0;
         margin: 0;
         padding-left: 3px;

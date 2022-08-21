@@ -19,12 +19,20 @@
     
     
     let loaded = false;
+    export let dev = true;
+    
+    //for dev option time set to 0
+    let load_time = 0;
+    
+    if (!dev) {
+        load_time = 5000;
+    }
     
     $: {
         if (!loaded) {
             setTimeout(() => {
                 loaded = true;
-            }, 5000)
+            }, load_time)
         }
         
         console.log("loaded: ", loaded)

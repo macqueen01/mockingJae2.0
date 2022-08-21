@@ -2,9 +2,6 @@
     .content-wrap {
         width: 300px;
         height: 500px;
-        /* minimalistic design of a container with rounded corner and subtle color and shadow. 
-        places the container inside this one center */
-
         border-radius: 2px;
         box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
         background-color: white;

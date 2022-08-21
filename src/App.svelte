@@ -8,9 +8,17 @@
 	$: loggedIn = false;
 	$: new_load = true;
 	
+	let dev = true;
+	let load_time = 0;
+	
+	if (!dev) {
+	    load_time = 10000;
+	}
+	
+
 	setTimeout(() => {
 	    new_load = false;
-	}, 10000)
+	}, load_time)
 	
 	
 	
@@ -55,11 +63,11 @@
 <main>
     {#if new_load}
         <div class="spin-container">
-            <Loading />
+            <Loading dev={dev} />
         </div>
     {:else}
 	    <Navbar />
-	    <Content />
+	    <Content dev={dev} />
 	    <Footer />
     {/if}
 </main>

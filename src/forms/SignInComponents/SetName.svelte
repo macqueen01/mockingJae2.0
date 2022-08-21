@@ -171,15 +171,14 @@
         height: 150px;
         padding: 0;
         margin: 0;
-        margin-top: 10px;
         display: flex;
         flex-direction: column;
         justify-content: start;
     }
     
     p {
-        font-family: latoRegular;
-        font-size: 13px;
+        font-family: popRegular;
+        font-size: 12px;
         padding: 0;
         margin: 0;
         padding-left: 3px;

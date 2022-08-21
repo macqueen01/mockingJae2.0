@@ -2,9 +2,6 @@
     .content-wrap {
         width: 300px;
         height: 500px;
-        /* minimalistic design of a container with rounded corner and subtle color and shadow. 
-        places the container inside this one center */
-
         border-radius: 2px;
         box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
         background-color: white;
@@ -13,7 +10,6 @@
 
     }
 
-    /* style of login continer. centers all items inside */
     .login-container {
         display: flex;
         justify-content: center;
@@ -25,7 +21,6 @@
     }
 
     .login-title {
-        /* places the title center horizontally and places it top of the login-container vertically */
         display: flex;
         justify-content: center;
         align-items: flex-start;
@@ -79,7 +74,16 @@
     }
     
     .login-input {
-        padding-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: fit-content;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        margin-bottom: 30px;
+        position: relative;
     }
     
     .actions {
@@ -123,7 +127,7 @@
     .middle {
         display: flex;
         justify-content: center;
-        font-family: latoRegular;
+        font-family: popRegular;
         letter-spacing: 6.5px;
         font-size: 15px;
         color: gray;
@@ -160,6 +164,58 @@
         background-color: transparent;
         border: none;
     }
+    
+    .email-input {
+        margin: 0;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 15px;
+    }
+    
+    .password-input {
+        margin: 0;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 15px;
+    }
+    
+    .username-label, .password-label {
+        width: 100%;
+        height: fit-content;
+        font-size: 15px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        position: absolute;
+        top: 6px;
+        left: 7px;
+        -webkit-transition: all 0.2s ease-in;
+        color: gray
+    }
+    
+    
+    .username-label-filled, .password-label-filled {
+        width: 100%;
+        height: fit-content;
+        font-size: 12px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        position: absolute;
+        top: -13px;
+        left: -2px;
+        -webkit-transition: all 0.2s ease-in;
+    }
+
+    
+    .login-input:focus-within label {
+        top: -13px;
+        left: -2px;
+        font-size: 12px;
+    }
+
 
 </style>
 
@@ -168,6 +224,9 @@
     import { createEventDispatcher } from 'svelte';
     
     var dispatch = createEventDispatcher();
+    
+    let email = "";
+    let password = "";
 
     function switchToSignIn() {
         console.log("switching to signIn")
@@ -175,6 +234,9 @@
             signIn: true
         });
     }
+
+    
+    
 
 </script>
 
@@ -189,10 +251,14 @@
                 <div class="login-form">
                     <form action="/login" method="POST">
                         <div class="login-input">
-                            <input type="text" name="username" placeholder="Your phone number or email">
+                            <label for="username" class="{email.length == 0 ? 'username-label' : 'username-label-filled'}">Your email</label>
+                            <input class="email-input" type="text" name="username" required bind:value={email}>
+                            <img src="/icons/crop_bar.png" height="4" width="200">
                         </div>
                         <div class="login-input">
-                            <input type="password" name="password" placeholder="Password">
+                            <label for="password" class="{password.length == 0 ? 'password-label' : 'password-label-filled'}">Password</label>                                       
+                            <input class="password-input" type="password" name="password" required bind:value={password}>
+                            <img src="/icons/crop_bar.png" height="4" width="200">
                         </div>
                         <div class="actions">
                           <div class="login-button-wrap">                              

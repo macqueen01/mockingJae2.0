@@ -164,6 +164,8 @@
     .email-requirement-container {
         width: 60%;
         height: 150px;
+        position: relative;
+        top: -10px;
         padding: 0;
         margin: 0;
         display: flex;
@@ -172,8 +174,8 @@
     }
     
     p {
-        font-family: latoRegular;
-        font-size: 13px;
+        font-family: popRegular;
+        font-size: 12px;
         padding: 0;
         margin: 0;
         padding-left: 3px;
