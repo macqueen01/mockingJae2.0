@@ -36,6 +36,7 @@
         margin-left: auto;
         margin-right: auto;
     }
+    
 </style>
 
 <div class="footer-container">

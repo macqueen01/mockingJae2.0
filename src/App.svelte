@@ -5,7 +5,7 @@
 	import Footer from "./Footer.svelte";
 	import Loading from "./Loading.svelte";
 	
-	$: loggedIn = false;
+	$: loggedIn = true;
 	$: new_load = true;
 	
 	let dev = true;
@@ -20,6 +20,10 @@
 	    new_load = false;
 	}, load_time)
 	
+	function loginHandler(e) {
+	    loggedIn = e.detail.loggedIn
+	    console.log("login status:", loggedIn)
+	}
 	
 	
 </script>
@@ -33,7 +37,7 @@
 
 	:global(body) {
 		width: 100%;
-		height: 100%;
+		height: 200vw;
 		background-color: #FEF7DC;
 		margin: 0;
 		padding: 0;
@@ -67,7 +71,7 @@
         </div>
     {:else}
 	    <Navbar />
-	    <Content dev={dev} />
+	    <Content dev={dev} loggedIn={loggedIn} on:login={loginHandler}/>
 	    <Footer />
     {/if}
 </main>
