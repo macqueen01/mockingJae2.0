@@ -5,7 +5,8 @@
         top: 0;
         left: 0;
         right: 0;
-        border-bottom: thin solid #E6DDC6;
+        border-bottom: solid #59545f;
+		border-width: 2px;
         height: 40px;
         width: 100%;
         background-color: #FEF7DC;

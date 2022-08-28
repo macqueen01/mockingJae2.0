@@ -65,17 +65,27 @@
 html, body {
 	position: relative;
 	width: 100%;
-	height: 200vw;
+}
+
+html {
+	height: 100vh;
 }
 
 body {
-   width: 100%;
-   height: 100vw;
+	-ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-snap-type: y mandatory;
+	overscroll-behavior-y: none;
+    width: 100%;
 	color: #333;
 	margin: 0;
 	padding: 8px;
 	box-sizing: border-box;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+body::-webkit-scrollbar {
+	display: none;
 }
 
 a {

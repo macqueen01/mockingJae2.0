@@ -4,6 +4,7 @@
 	import Content from "./Content.svelte";
 	import Footer from "./Footer.svelte";
 	import Loading from "./Loading.svelte";
+	import Panel from './Panel.svelte';
 	
 	$: loggedIn = true;
 	$: new_load = true;
@@ -37,8 +38,8 @@
 
 	:global(body) {
 		width: 100%;
-		height: 200vw;
-		background-color: #FEF7DC;
+		height: 100vh;
+		background-color: #59545f;
 		margin: 0;
 		padding: 0;
 	}
@@ -72,6 +73,10 @@
     {:else}
 	    <Navbar />
 	    <Content dev={dev} loggedIn={loggedIn} on:login={loginHandler}/>
-	    <Footer />
+		{#if !loggedIn}
+	    	<Footer />
+		{:else}
+			<Panel />
+		{/if}
     {/if}
 </main>

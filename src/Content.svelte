@@ -5,8 +5,8 @@
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: 100%;
-        background-color: whitesmoke;
+        min-height: 100%;
+        background-color: #59545f;
         margin: 0;
         padding: 0;
     }

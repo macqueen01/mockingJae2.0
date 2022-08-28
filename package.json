@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public --no-clear",
+    "start": "sirv public --host 0.0.0.0",
     "sveltekit-init": "npm create svelte@latest mockingjae"
   },
   "devDependencies": {
