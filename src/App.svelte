@@ -71,7 +71,7 @@
             <Loading dev={dev} />
         </div>
     {:else}
-	    <Navbar />
+	    <Navbar loggedIn={loggedIn}/>
 	    <Content dev={dev} loggedIn={loggedIn} on:login={loginHandler}/>
 		{#if !loggedIn}
 	    	<Footer />

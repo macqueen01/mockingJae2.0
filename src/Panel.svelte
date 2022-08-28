@@ -1,16 +1,16 @@
 <style>
     .panel-container {
         display: flex;
-		position: fixed;
-		z-index: 40;
-		bottom: 0;
-		left: 0;
-		right: 0;
+        position: fixed;
+        z-index: 40;
+        bottom: 0;
+        left: 0;
+        right: 0;
         width: 100%;
         height: 55px;
-        border-top: solid #59545f;
-		border-width: 2px;
-		background-color: #FEF7DC;
+        border-top: solid #ebe5d1;
+        border-width: 2px;
+        background-color: #FEF7DC;
         justify-content: center;
     }
 
@@ -30,8 +30,9 @@
 
 <div class="panel-container">
     <div class="panel-wrap">
-		<a><img src="/icons/svgs/Home.svg" height="35"></a>
+		<a><img src="/icons/svgs/Home_panel.svg" height="35"></a>
 		<a><img src="/icons/svgs/addWithBorder.svg" height="35"></a>
-		<a><img src="/icons/svgs/Global.svg" height="35"></a>
+		<a><img src="/icons/svgs/Global_panel.svg" height="35"></a>
+		<a><img src="/icons/svgs/locked.svg" height="35"></a>
     </div>
 </div>

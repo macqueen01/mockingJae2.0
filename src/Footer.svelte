@@ -3,7 +3,6 @@
         display: flex;
         width: 100%;
         height: 10%;
-        border-top: thin solid #E6DDC6;
         justify-content: center;
     }
 
@@ -24,11 +23,9 @@
         text-justify: center;
         width: fit-content;
         height: fit-content;
+        color: whitesmoke;
     }
     
-    p {
-        
-    }
 
     img {
         position: absolute;
@@ -43,7 +40,7 @@
     <div class="footer-wrap">
         <div class="footer">
             <p>SIGNITURE OF</p>
-            <img src="/icons/svgs/Jae.svg" height="40">
+            <img src="/icons/svgs/Jae_footer.svg" height="40">
         </div>
     </div>
 </div>

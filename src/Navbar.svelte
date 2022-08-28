@@ -6,10 +6,10 @@
         left: 0;
         right: 0;
         border-bottom: solid #59545f;
-		border-width: 2px;
+        border-width: 2px;
         height: 40px;
         width: 100%;
-        background-color: #FEF7DC;
+        background-color: #59545f;
         
     }
 
@@ -46,18 +46,26 @@
 
 </style>
 
+<script>
+    export let loggedIn;
+    
+
+</script>
+
 <div class="navbar">
     <div class="nav-content-wrap">
         <div class="logo-wrap">
             <img src="/icons/svgs/Me.svg" height="30" alt="JAE">
         </div>
         <div class="menu-wrap">
-            <div class="home-wrap">
-                <img src="/icons/svgs/Home.svg" height="30" alt="home">
-            </div>
-            <div class="global-wrap">
-                <img src="/icons/svgs/Global.svg" height="30" alt="global">
-            </div>
+            {#if !loggedIn}
+                <div class="home-wrap">
+                    <img src="/icons/svgs/Home.svg" height="30" alt="home">
+                </div>
+                <div class="global-wrap">
+                    <img src="/icons/svgs/Global.svg" height="30" alt="global">
+                </div>
+            {/if}
             <div class="dm-wrap">
                 <img src="/icons/svgs/Dm.svg" height="30" alt="dm">
             </div>       
