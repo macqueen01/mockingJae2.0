@@ -4,7 +4,7 @@
     
     .home-container {
         width: 100%;
-        min-height: 500px;
+        min-height: 160vw;
         background-color: whitesmoke;
         padding: 0;
         margin: 0;
@@ -13,7 +13,7 @@
     
     .blog-header {
       width: 100%;
-      height: 70px;
+      height: 20vw;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -29,7 +29,7 @@
         border-radius: 22px;
         background-color: whitesmoke;
         margin: 0;
-    padding: 0;
+        padding: 0;
         margin-left: 15px;
     }
     
@@ -46,14 +46,13 @@
       margin: 0;
       padding: 0;
       width: 100%;
-      height: 330px;
+      height: 100vw;
       background-color: transparent;
     }
     
     .memes {
       width: 100%;
-      min-height: 100px;
-      background-color: white;
+      min-height: 40vw;
     }
     
     .sample {

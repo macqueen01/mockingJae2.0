@@ -7,7 +7,7 @@
         right: 0;
         border-bottom: solid #59545f;
         border-width: 2px;
-        height: 40px;
+        height: 50px;
         width: 100%;
         background-color: #59545f;
         

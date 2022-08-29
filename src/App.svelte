@@ -9,7 +9,7 @@
 	$: loggedIn = true;
 	$: new_load = true;
 	
-	let dev = true;
+	let dev = false;
 	let load_time = 0;
 	
 	if (!dev) {
