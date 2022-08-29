@@ -23,7 +23,7 @@
 		align-items: center;
 		margin: 0;
 		padding: 0;
-		padding-top: 8px;
+		padding-top: 10px;
     }
 
 

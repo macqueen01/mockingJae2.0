@@ -74,8 +74,6 @@ html {
 body {
 	-ms-overflow-style: none;
     scrollbar-width: none;
-    scroll-snap-type: y mandatory;
-	overscroll-behavior-y: none;
     width: 100%;
 	color: #333;
 	margin: 0;

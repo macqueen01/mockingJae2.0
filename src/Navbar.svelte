@@ -65,14 +65,14 @@
         <div class="menu-wrap">
             {#if !loggedIn}
                 <div class="home-wrap">
-                    <img src="/icons/svgs/Home.svg" height="30" alt="home">
+                    <img src="/icons/svgs/Home.svg" height="28" alt="home">
                 </div>
                 <div class="global-wrap">
-                    <img src="/icons/svgs/Global.svg" height="30" alt="global">
+                    <img src="/icons/svgs/Global.svg" height="28" alt="global">
                 </div>
             {/if}
             <div class="dm-wrap">
-                <img src="/icons/svgs/Dm.svg" height="30" alt="dm">
+                <img src="/icons/svgs/Dm.svg" height="28" alt="dm">
             </div>       
         </div>
     </div>

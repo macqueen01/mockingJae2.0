@@ -1,4 +1,6 @@
 <script>
+    import { onMount } from 'svelte';
+    
 	import Navbar from "./Navbar.svelte";
 	import Container from "./Content.svelte";
 	import Content from "./Content.svelte";
@@ -8,8 +10,10 @@
 	
 	$: loggedIn = true;
 	$: new_load = true;
+	 
+
 	
-	let dev = false;
+	let dev = true;
 	let load_time = 0;
 	
 	if (!dev) {
@@ -26,6 +30,7 @@
 	    console.log("login status:", loggedIn)
 	}
 	
+
 	
 </script>
 
@@ -42,6 +47,7 @@
 		background-color: #59545f;
 		margin: 0;
 		padding: 0;
+		overflow-y: auto;
 	}
 
 	main {
@@ -71,7 +77,7 @@
             <Loading dev={dev} />
         </div>
     {:else}
-	    <Navbar loggedIn={loggedIn}/>
+	    <Navbar loggedIn={loggedIn} />
 	    <Content dev={dev} loggedIn={loggedIn} on:login={loginHandler}/>
 		{#if !loggedIn}
 	    	<Footer />
