@@ -17,8 +17,9 @@
         display: flex;
         width: 100%;
         height: 100%;
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: 20px;
+        padding-right: 15px;
+		padding-top: 4px;
     }
 
     .logo-wrap {
@@ -55,8 +56,12 @@
 <div class="navbar">
     <div class="nav-content-wrap">
         <div class="logo-wrap">
-            <img src="/icons/svgs/Me.svg" height="30" alt="JAE">
-        </div>
+			{#if !loggedIn}
+            	<img src="/icons/svgs/Me.svg" height="30" alt="JAE">
+        	{:else}
+				<img src="/icons/svgs/Jae_footer.svg" height="27" alt="JAE">
+			{/if}
+		</div>
         <div class="menu-wrap">
             {#if !loggedIn}
                 <div class="home-wrap">

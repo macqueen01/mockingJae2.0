@@ -6,7 +6,7 @@
         margin: 0;
         padding: 0;
         padding-top: 50px;
-        padding-bottom: 50px;
+        padding-bottom: 80px;
     }
     
     
@@ -30,11 +30,7 @@
     .date-line {
         color: white;
         margin-left: 7px;
-<<<<<<< HEAD
-        font-family: popLight;
-=======
         font-family: popExtraLight;
->>>>>>> ce9325f238ddedb4216f14e6356d28fd95f8ef43
         font-size: 13px;
     }
     
