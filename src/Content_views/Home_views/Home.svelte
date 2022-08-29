@@ -88,7 +88,7 @@
     .date-line {
         color: white;
         margin-left: 7px;
-        font-family: popThin;
+        font-family: popLight;
         font-size: 13px;
     }
     
