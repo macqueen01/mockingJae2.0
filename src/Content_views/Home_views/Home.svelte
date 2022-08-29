@@ -85,16 +85,16 @@
     
     function updateHandler(e) {
         if (HOME) {
-            height_from_bottom = height - document.documentElement.scrollTop;
-            console.log(height_from_bottom)
+            height_from_bottom = height - window.scrollY;
+            console.log(height_from_bottom, height - document.documentElement.scrollTop)
         }
     }
     
     $: {
     
-        if (height_from_bottom <= 880 && !refresh) {
+        if (height_from_bottom <= 850 && !refresh) {
             refresh = true;
-            height_from_bottom = height - document.documentElement.scrollTop
+            height_from_bottom = height - window.scrollY
             setTimeout(() => {
                 refresh = false;
             }, 2000)
