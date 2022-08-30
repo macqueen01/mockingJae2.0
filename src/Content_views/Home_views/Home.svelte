@@ -6,7 +6,7 @@
         margin: 0;
         padding: 0;
         padding-top: 50px;
-        padding-bottom: 30px;
+        padding-bottom: 15px;
     }
     
     .date-line-container {
@@ -91,11 +91,13 @@
     }
     
     $: {
-    
-        if (height_from_bottom <= 850 && !refresh) {
+        // loading while loads more blogs
+        // fetches blogs from server then updates HOME
+        if (height_from_bottom <= 870 && !refresh) {
             refresh = true;
-            height_from_bottom = height - window.scrollY
+            height_from_bottom = height - window.scrollY;
             setTimeout(() => {
+                window.scrollTo(0, height - 1000)
                 refresh = false;
             }, 2000)
         }
@@ -138,13 +140,13 @@
     {#if !refresh}
         <div class="date-line-container">
             <div class="date-line-wrap">
-                <h4 class="date-line">Pull to refresh<h4>
+                <h4 class="date-line">Pull to load more<h4>
             </div>
         </div>
     {:else if refresh}
         <div class="refresher">
             <div class="refresher-inner-wrap">
-                <img src="/icons/svgs/pizzaSpinner.svg" height="30" width="30" class="pizza-spinner-refresh">
+                <img src="/icons/svgs/pizzaSpinner.svg" height="25" width="25" class="pizza-spinner-refresh">
             </div>
         </div>
     {/if}
