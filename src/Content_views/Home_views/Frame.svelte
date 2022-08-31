@@ -21,6 +21,7 @@
       padding: 0;
       margin: 0;
       background-color: white;
+      position: relative;
     }
     
     .bloggers {
@@ -151,6 +152,7 @@
         font-family: popRegular;
         margin: 0;
         padding: 0;
+        position: relative;
         
     }
     
@@ -178,6 +180,43 @@
         color: #8c8c8c;
     }
     
+    .extended-title-hidden {
+        position: absolute;
+        width: 100vw;
+        height: 100%;
+        background-color: #242424;
+        top: 20vw;
+        z-index: 6;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .extended-title-visible {
+        position: absolute;
+        width: 100vw;
+        height: 100%;
+        background-color: #242424;
+        top: 20vw;
+        z-index: 6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .title {
+        width: fit-content;
+        height: fit-content;
+        text-align: center;
+        justify-content: center;
+        font-size: 15px;
+        font-family: popRegular;
+        color: whitesmoke;
+    }
 
     
 </style>
@@ -193,6 +232,8 @@
     
     
     let TITLE;
+    let EXTENDEDTITLE;
+    $: visible = false;
     
     onMount(() => {
         if (title.length >= 30) {
@@ -201,6 +242,15 @@
             TITLE.innerHTML = title;
         }
     })
+    
+    function titleExtend() {
+        if (!visible) {
+            visible = true;
+            setTimeout(() => {
+                visible = false;
+            }, 9000)
+        }
+    }
 
 </script>
 
@@ -218,7 +268,7 @@
         </div>
         <div class="title-date-dm-container">
             <div class="title-date-wrap">
-                <div class="title-wrap">
+                <div class="title-wrap" on:click={titleExtend}>
                     <div class="title-container-long" bind:this={TITLE}>
                         {title}
                     </div>
@@ -230,6 +280,9 @@
             <div class="dm-wrap">
                 DM
             </div>
+        </div>
+        <div class={visible ? 'extended-title-visible' : 'extended-title-hidden'}>
+            <h3 class="title">{title}</h3>
         </div>
     </div>
     <div class="blog">

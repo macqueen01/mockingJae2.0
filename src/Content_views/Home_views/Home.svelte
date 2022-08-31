@@ -121,9 +121,9 @@
             refresh = true;
             height_from_bottom = 1000;
             setTimeout(() => {
-                window.scrollTo(0, height - 700)
+                window.scrollTo(0, height - 900)
                 refresh = false;
-            }, 2000)
+            }, 3000)
         }
     
     }
