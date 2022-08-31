@@ -4,7 +4,7 @@
     
     .home-container {
         width: 100%;
-        min-height: 160vw;
+        min-height: 170vw;
         background-color: whitesmoke;
         padding: 0;
         margin: 0;
@@ -23,20 +23,69 @@
       background-color: white;
     }
     
+    .bloggers {
+        width: 100px;
+        height: 95%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        margin: 0;
+        padding: 0;
+        z-index: 3;
+    }
+    
+    
     .blogger {
-        width: 44px;
-        height: 44px;
-        border-radius: 22px;
+        width: 48px;
+        height: 48px;
+        border-radius: 24px;
         background-color: whitesmoke;
         margin: 0;
         padding: 0;
-        margin-left: 15px;
     }
     
-    .title-date-container {
+    .blogger-default {
+        position: relative;
+        z-index: 3;
+    }
+    
+    .blogger-company-1 {
+        position: absolute;
+        left: 40px;
+        z-index: 2;
+    }
+    
+    .blogger-company-2 {
+        position: absolute;
+        z-index: 1;
+        left: 60px;
+    }
+    
+    
+    .title-date-dm-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         width: 260px;
         height: 100%;
-        background-color: whitesmoke;
+    }
+    
+    .title-date-wrap {
+        width: 75%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+    }
+    
+    .dm-wrap {
+        width: 25%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: end;
     }
     
     .blog {
@@ -52,12 +101,81 @@
     
     .memes {
       width: 100%;
-      min-height: 40vw;
+      min-height: 50vw;
+      display: grid;
+      grid-template-columns: 25vw 25vw 25vw 25vw;
+      grid-template-rows: 25vw 25vw;
+    }
+    
+    .first-meme {
+        grid-column: 1 / 3;
+        grid-row: 1 / 3;
+        background-color: blue;
+    }
+    
+    .second-meme {
+        grid-column: 3 / 4;
+        grid-row: 1 / 2;
+        background-color: red;
+    }
+    
+    .third-meme {
+        grid-column: 4 / 5;
+        grid-row: 1 / 2;
+        background-color: black;
+    }
+    
+    .forth-meme {
+        gird-column: 3 / 4;
+        grid-row: 2 / 3;
+        background-color: gray;
+    }
+    
+    .add-meme {
+        grid-column: 4 / 5;
+        grid-row: 2 / 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
     }
     
     .sample {
         height: 100%;
         width: 100%;
+    }
+    
+    .title-wrap {
+        width: 100%;
+        height: 75%;
+        font-family: popRegular;
+        margin: 0;
+        padding: 0;
+        
+    }
+    
+    .title-container-long {
+        margin: 0;
+        padding: 0;
+        align-items: center;
+        display: flex;
+        font-size: 14px;
+        text-align: center;
+        height: 100%;
+        width: 100%;
+        margin-top: 5px;
+    }
+    
+    .title-container-short {
+        
+    }
+    
+    .date-wrap {
+        width: 100%;
+        height: 25%;
+        font-size: 12px;
+        text-align: end;
+        color: #8c8c8c;
     }
     
 
@@ -66,11 +184,24 @@
 
 
 <script>
+    import { onMount } from 'svelte';
     export let blogger = "Jae";
-    export let title = "mocking jae mocking jay"
-    export let memes = {}
-    export let blog = "/icons/svgs/Global_panel.svg"
-    export let date = "2022.12.12"
+    export let title = "mocking jae mocking jay";
+    export let memes = {};
+    export let blog = "/icons/svgs/Global_panel.svg";
+    export let date = "2022.12.12";
+    
+    
+    let TITLE;
+    
+    onMount(() => {
+        if (title.length >= 30) {
+            TITLE.innerHTML = title.slice(0, 30) + '...';
+        } else {
+            TITLE.innerHTML = title;
+        }
+    })
+
 </script>
 
 
@@ -80,22 +211,41 @@
 
 <div class="home-container">
     <div class="blog-header">
-        <div class="blogger">
-            {blogger}
+        <div class="bloggers">
+          <div class="blogger-default blogger">
+              {blogger}
+          </div>
         </div>
-        <div class="title-date-container">
-            <div class="title-wrap">
-                {title}
+        <div class="title-date-dm-container">
+            <div class="title-date-wrap">
+                <div class="title-wrap">
+                    <div class="title-container-long" bind:this={TITLE}>
+                        {title}
+                    </div>
+                </div>
+                <div class="date-wrap">
+                    {date}
+                </div> 
             </div>
-            <div class="date-wrap">
-                {date}
-            </div> 
+            <div class="dm-wrap">
+                DM
+            </div>
         </div>
     </div>
     <div class="blog">
         <img src={blog} class="sample">
         </div>
     <div class="memes">
-        "{memes}"
+        <div class="first-meme">
+        </div>
+        <div class="second-meme">
+        </div>
+        <div class="third-meme">
+        </div>
+        <div class="forth-meme">
+        </div>
+        <div class="add-meme">
+            <img src="/icons/svgs/addWithOutBorder.svg" height="40">
+        </div>
     </div>
 </div>

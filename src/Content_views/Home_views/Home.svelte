@@ -11,8 +11,8 @@
     
     .date-line-container {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-direction: row;
+        justify-content: start;
         width: 100%;
         height: 50px;
     }
@@ -46,6 +46,14 @@
         }
     }
     
+    .pull-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 50px;
+    }
+    
     .date-line-wrap {
         display: flex;
         justify-content: center;
@@ -62,6 +70,23 @@
         font-size: 13px;
     }
     
+    
+    .pull-wrap {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        align-items: center;
+        width: 200px;
+    }
+    
+    
+    .pull-line {
+        color: white;
+        margin-left: 7px;
+        font-family: popExtraLight;
+        font-size: 13px;
+    }
+    
 </style>
 
 <script>
@@ -70,10 +95,10 @@
 
     
     let blogger = "jae"
-    let title = "me"
+    let title = "When you went seoul and saw mom and dad having sex"
     let memes = {}
     let blog = "/icons/svgs/Global_panel.svg"
-    let date = "2022.12.12"
+    let date = "4 hours ago"
     $: height_from_bottom = 10000;
     $: refresh = false;
     let HOME;
@@ -85,19 +110,18 @@
     
     function updateHandler(e) {
         if (HOME) {
-            height_from_bottom = height - window.scrollY;
-            console.log(height_from_bottom, height - document.documentElement.scrollTop)
+            height_from_bottom = height - window.scrollY
         }
     }
     
     $: {
         // loading while loads more blogs
         // fetches blogs from server then updates HOME
-        if (height_from_bottom <= 870 && !refresh) {
+        if (height_from_bottom <= 840 && !refresh) {
             refresh = true;
-            height_from_bottom = height - window.scrollY;
+            height_from_bottom = 1000;
             setTimeout(() => {
-                window.scrollTo(0, height - 1000)
+                window.scrollTo(0, height - 700)
                 refresh = false;
             }, 2000)
         }
@@ -138,9 +162,9 @@
 
 
     {#if !refresh}
-        <div class="date-line-container">
-            <div class="date-line-wrap">
-                <h4 class="date-line">Pull to load more<h4>
+        <div class="pull-container">
+            <div class="pull-wrap">
+                <h4 class="pull-line">Pull to load more<h4>
             </div>
         </div>
     {:else if refresh}

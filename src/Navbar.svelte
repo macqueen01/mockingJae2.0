@@ -10,6 +10,7 @@
         height: 50px;
         width: 100%;
         background-color: #59545f;
+        z-index: 10;
         
     }
 
@@ -19,7 +20,7 @@
         height: 100%;
         padding-left: 20px;
         padding-right: 15px;
-		padding-top: 4px;
+        padding-top: 4px;
     }
 
     .logo-wrap {
