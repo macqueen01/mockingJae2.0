@@ -33,7 +33,7 @@
 <div class="panel-container">
     <div class="panel-wrap">
 		<a><img src="/icons/svgs/Home_panel.svg" height="28"></a>
-		<a><img src="/icons/svgs/addWithBorder.svg" height="28"></a>
+		<a><img src="/icons/svgs/draw.svg" height="28"></a>
 		<a><img src="/icons/svgs/Global_panel.svg" height="28"></a>
 		<a><img src="/icons/svgs/locked.svg" height="28"></a>
     </div>

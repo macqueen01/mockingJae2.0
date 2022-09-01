@@ -1,5 +1,7 @@
 <script>
 
+    import { scale } from 'svelte/transition';
+
 </script>
 
 <style>

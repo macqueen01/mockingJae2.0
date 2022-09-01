@@ -71,8 +71,8 @@
     
     .date-line {
         color: #d9d7d7;
-        font-family: popExtraLight;
-        font-size: 11px;
+        font-family: popLight;
+        font-size: 14px;
     }
     
     
@@ -92,12 +92,15 @@
         font-size: 13px;
     }
     
+    
+    
 </style>
 
 <script>
     import { onMount, afterUpdate } from 'svelte';
-    import { scale } from 'svelte/transition';
-    import Frame from './Frame.svelte'
+    import { scale, fade } from 'svelte/transition';
+    import Frame from './Frame.svelte';
+    import Posting from './Posting.svelte';
 
     
     let blogger = "jae"
@@ -107,6 +110,8 @@
     let date = "4 hours ago"
     $: height_from_bottom = 10000;
     $: refresh = false;
+    $: add_mode = false;
+    $: add_mode_meme_id = null;
     let HOME;
     let height;
     
@@ -125,7 +130,7 @@
     }
     
     $: {
-        // loading while loads more blogs
+        // loads more blogs
         // fetches blogs from server then updates HOME
         if (height_from_bottom <= 840 && !refresh) {
             refresh = true;
@@ -137,13 +142,18 @@
         }
     
     }
+    
+    function addMemeHandler(e) {
+        add_mode = e.detail.add_mode;
+        add_mode_meme_id = e.detail.meme_id;
+    }
 
 
 </script>
 
-
-<div class="home-wrap" on:wheel={updateHandler} on:touchmove={updateHandler} bind:this={HOME}>
-    <Frame blogger={blogger} title={title} date={date} memes={memes} blog={blog} />
+{#if !add_mode && !add_mode_meme_id}
+<div class="home-wrap" on:wheel={updateHandler} on:touchmove={updateHandler} bind:this={HOME} transition:fade={{duration:400, opacity: 0}}>
+    <Frame blogger={blogger} title={title} date={date} memes={memes} blog={blog} on:add-meme={addMemeHandler}/>
     <Frame blogger={blogger} title={title} date={date} memes={memes} blog={blog} />
     <Frame blogger={blogger} title={title} date={date} memes={memes} blog={blog} />
     <Frame blogger={blogger} title={title} date={date} memes={memes} blog={blog} />
@@ -151,7 +161,7 @@
     
     <div class="date-line-container">
         <div class="date-line-wrap">
-        <h4 class="date-line">June 3 2020<h4>
+            <h4 class="date-line"> June 3 2020<h4>
         </div>
     </div>
     
@@ -161,8 +171,7 @@
 
     <div class="date-line-container">
         <div class="date-line-wrap">
-            <img src="/icons/svgs/DATE_word.svg" height="11px">
-            <h4 class="date-line">: June. 4. 2020<h4>
+            <h4 class="date-line"> June. 4. 2020<h4>
         </div>
     </div>
     
@@ -177,11 +186,13 @@
             </div>
         </div>
     {:else if refresh}
-        <div class="refresher" transition:scale={{duration: 400, opacity: 0, start: 0}}>
+        <div class="refresher" transition:scale={{duration: 300, opacity: 0, start: 0}}>
             <div class="refresher-inner-wrap">
                 <img src="/icons/svgs/pizzaSpinner.svg" height="25" width="25" class="pizza-spinner-refresh">
             </div>
         </div>
     {/if}
-    
 </div>
+{:else if add_mode && add_mode_meme_id}
+    <Posting meme_id={add_mode_meme_id}/>
+{/if}
