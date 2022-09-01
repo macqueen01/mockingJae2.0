@@ -12,7 +12,7 @@
     .date-line-container {
         display: flex;
         flex-direction: row;
-        justify-content: start;
+        justify-content: flex-end;
         width: 100%;
         height: 50px;
     }
@@ -57,17 +57,22 @@
     .date-line-wrap {
         display: flex;
         justify-content: center;
+        display: relative;
         flex-direction: row;
         align-items: center;
         width: 200px;
+        padding-top: 30px;;
+        padding-left: 5px;
+        padding-right: 3px;
+        justify-content: flex-end;
+        padding-bottom: 0;
     }
     
     
     .date-line {
-        color: white;
-        margin-left: 7px;
+        color: #d9d7d7;
         font-family: popExtraLight;
-        font-size: 13px;
+        font-size: 11px;
     }
     
     
@@ -90,13 +95,14 @@
 </style>
 
 <script>
-    import { onMount } from 'svelte';
+    import { onMount, afterUpdate } from 'svelte';
+    import { scale } from 'svelte/transition';
     import Frame from './Frame.svelte'
 
     
     let blogger = "jae"
     let title = "When you went seoul and saw mom and dad having sex"
-    let memes = {}
+    let memes = [1,2,3,4];
     let blog = "/icons/svgs/Global_panel.svg"
     let date = "4 hours ago"
     $: height_from_bottom = 10000;
@@ -107,6 +113,10 @@
     onMount(() => {
         height = HOME.offsetHeight;
     })         
+    
+    afterUpdate(() => {
+        height = HOME.offsetHeight;
+    })
     
     function updateHandler(e) {
         if (HOME) {
@@ -141,8 +151,7 @@
     
     <div class="date-line-container">
         <div class="date-line-wrap">
-            <img src="/icons/svgs/DATE_word.svg" height="9px">
-            <h4 class="date-line">- June. 3. 2020<h4>
+        <h4 class="date-line">June 3 2020<h4>
         </div>
     </div>
     
@@ -152,8 +161,8 @@
 
     <div class="date-line-container">
         <div class="date-line-wrap">
-            <img src="/icons/svgs/DATE_word.svg" height="9px">
-            <h4 class="date-line">- June. 4. 2020<h4>
+            <img src="/icons/svgs/DATE_word.svg" height="11px">
+            <h4 class="date-line">: June. 4. 2020<h4>
         </div>
     </div>
     
@@ -162,13 +171,13 @@
 
 
     {#if !refresh}
-        <div class="pull-container">
+        <div class="pull-container" transition:scale={{duration: 400, opacity: 0, start: 0}}>
             <div class="pull-wrap">
                 <h4 class="pull-line">Pull to load more<h4>
             </div>
         </div>
     {:else if refresh}
-        <div class="refresher">
+        <div class="refresher" transition:scale={{duration: 400, opacity: 0, start: 0}}>
             <div class="refresher-inner-wrap">
                 <img src="/icons/svgs/pizzaSpinner.svg" height="25" width="25" class="pizza-spinner-refresh">
             </div>

@@ -108,28 +108,51 @@
       grid-template-rows: 25vw 25vw;
     }
     
+    .show-memes {
+      width: 100%;
+      height: fit-content;
+      display: grid;
+      grid-template-columns: 50vw 50vw;
+    }
+    
+    .rest-meme {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50vw;
+        width: 50vw;
+        margin: 0;
+        padding: 0;
+        background-color: beige;
+    }
+    
     .first-meme {
         grid-column: 1 / 3;
         grid-row: 1 / 3;
         background-color: blue;
+        position: relative;
     }
     
     .second-meme {
         grid-column: 3 / 4;
         grid-row: 1 / 2;
         background-color: red;
+        position: relative;
     }
     
     .third-meme {
         grid-column: 4 / 5;
         grid-row: 1 / 2;
         background-color: black;
+        position: relative;
     }
     
     .forth-meme {
         gird-column: 3 / 4;
         grid-row: 2 / 3;
         background-color: gray;
+        position: relative;
     }
     
     .add-meme {
@@ -139,6 +162,16 @@
         justify-content: center;
         align-items: center;
         
+    }
+    
+    .add-meme-in-show-meme {
+        width: 50vw;
+        height: 50vw;
+        margin: 0;
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+        display: flex;
     }
     
     .sample {
@@ -180,21 +213,8 @@
         color: #8c8c8c;
     }
     
-    .extended-title-hidden {
-        position: absolute;
-        width: 100vw;
-        height: 100%;
-        background-color: #242424;
-        top: 20vw;
-        z-index: 6;
-        display: none;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
-        padding: 0;
-    }
     
-    .extended-title-visible {
+    .extended-title {
         position: absolute;
         width: 100vw;
         height: 100%;
@@ -217,6 +237,20 @@
         font-family: popRegular;
         color: whitesmoke;
     }
+    
+    
+    .meme {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(36, 36, 36, 0.3);
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        
+    }
 
     
 </style>
@@ -224,15 +258,23 @@
 
 <script>
     import { onMount } from 'svelte';
+    import { fade, fly, slide, scale } from 'svelte/transition';
+    import { quintOut } from 'svelte/easing';
     export let blogger = "Jae";
     export let title = "mocking jae mocking jay";
-    export let memes = {};
+    export let memes = [1,2,3,4];
     export let blog = "/icons/svgs/Global_panel.svg";
     export let date = "2022.12.12";
     
     
     let TITLE;
     let EXTENDEDTITLE;
+    $: first = false;
+    $: second = false;
+    $: third = false;
+    $: forth = false;
+    $: add_mode = false;
+    
     $: visible = false;
     
     onMount(() => {
@@ -243,20 +285,11 @@
         }
     })
     
-    function titleExtend() {
-        if (!visible) {
-            visible = true;
-            setTimeout(() => {
-                visible = false;
-            }, 9000)
-        }
-    }
+    
+    
+    
 
 </script>
-
-
-
-
 
 
 <div class="home-container">
@@ -268,7 +301,7 @@
         </div>
         <div class="title-date-dm-container">
             <div class="title-date-wrap">
-                <div class="title-wrap" on:click={titleExtend}>
+                <div class="title-wrap" on:click={() => {visible = true; setTimeout(() => {visible = false}, 8000)}}>
                     <div class="title-container-long" bind:this={TITLE}>
                         {title}
                     </div>
@@ -281,24 +314,66 @@
                 DM
             </div>
         </div>
-        <div class={visible ? 'extended-title-visible' : 'extended-title-hidden'}>
-            <h3 class="title">{title}</h3>
-        </div>
+        {#if visible}
+            <div class='extended-title' transition:fly={{duration: 300, x: 0, y: 0, opacity: 0}}>
+                <h3 class="title">{title}</h3>
+            </div>
+        {/if}
     </div>
     <div class="blog">
         <img src={blog} class="sample">
+    </div>
+    {#if add_mode == false} 
+    <div class="memes" transition:fade={{duration: 200, easing: quintOut}}>
+        <div class="first-meme" on:click={() => {first = true; second = third = forth = false; setTimeout(() => {first = false}, 2000)}}>
+            {#if first}
+                <div class="meme" transition:fade={{duration: 200}}>
+                    <img src="/icons/svgs/Dm.svg" height="30">
+                    <a></a>
+                </div>
+            {/if}
         </div>
-    <div class="memes">
-        <div class="first-meme">
+        <div class="second-meme" on:click={() => {second = true; first = third = forth = false; setTimeout(() => {second = false}, 2000)}}>
+            {#if second}
+                <div class="meme" transition:fade={{duration: 200}}>
+                    <img src="/icons/svgs/Dm.svg" height="30">
+                </div>
+            {/if}
         </div>
-        <div class="second-meme">
+        <div class="third-meme" on:click={() => {third = true; second = first = forth = false; setTimeout(() => {third = false}, 2000)}}>
+            {#if third}
+                <div class="meme" transition:fade={{duration: 200}}>
+                    <img src="/icons/svgs/Dm.svg" height="30">
+                </div>
+            {/if}
         </div>
-        <div class="third-meme">
-        </div>
-        <div class="forth-meme">
+        <div class="forth-meme" on:click={() => {forth = true; second = third = first = false; setTimeout(() => {forth = false}, 2000)}}>
+            {#if forth}
+                <div class="meme" transition:fade={{duration: 200}}>
+                    <img src="/icons/svgs/Dm.svg" height="30">
+                </div>
+            {/if}
         </div>
         <div class="add-meme">
+            <a on:click={() => {add_mode = true;}}>
+                <img src="/icons/svgs/addWithOutBorder.svg" height="40">
+            </a>
+        </div>
+    </div>
+    {:else}
+    <div class="show-memes" transition:slide={{delay:200, duration:400, easing:quintOut}}>
+        {#each memes as meme}
+            <div class="rest-meme" transition:scale={{delay:600, duration:400, easing:quintOut, start: 0.5, opacity: 0}}>
+                {meme}
+            </div>
+        {:else}
+            <div class="no-meme-placeholder">
+                <h3>Add a first meme!</h3>
+            </div>
+        {/each}
+        <div class="add-meme-in-show-meme">
             <img src="/icons/svgs/addWithOutBorder.svg" height="40">
         </div>
     </div>
-</div>
+    {/if}
+</div>   
