@@ -1,25 +1,3 @@
-<script>
-    export let stage = 0;
-    export let file;
-    let title = 0;
-
-    import { createEventDispatcher } from 'svelte';
-    
-    var dispatch = createEventDispatcher();
-
-    function bubbleUpTitle() {
-        console.log("bubble up title...")
-        stage = 1; 
-        dispatch('postFile', {
-            file: file,
-            stage: stage
-        });
-    }
-
-
-
-</script>
-
 <style>
 
     
@@ -249,18 +227,68 @@
         margin: 0;
         border: thin solid #59545f
     }
+    
+    .meme-house-menu {
+        height: 100%;
+        width: 100%;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: 20
+    }
 
 </style>
 
+<script>
+    export let stage = 0;
+    export let file;
+    
+    
+    let is_local = false;
+    let sample;
+    $: meme_house_open = false;
 
+    import { createEventDispatcher } from 'svelte';
+    import { slide, fade } from 'svelte/transition';
+    
+    var dispatch = createEventDispatcher();
+
+    function bubbleUpFile() {
+        console.log("bubble up file...")
+        stage = 0; 
+        dispatch('postFile', {
+            file: file,
+            stage: stage
+        });
+    }
+    
+    function callToMemeHouse() {
+        meme_house_open = true;  
+        console.log("clicked!", meme_house_open);
+    }
+
+
+
+</script>
+
+{#if meme_house_open}
+    <div class="meme-house-menu">
+        
+    </div>
+{/if}
 
 <div class="set-post-file-wrap">
     <div class="container">
         <div class="questionair-container">
-             {#if true}
+            {#if !file}
                 <h2>Share your piece of meme</h2>
-             {:else}
-                <h2>Too long for a meme...</h2>
+            {:else}
+                <h2>Freezing Funny</h2>
             {/if}
         </div>
        
@@ -268,15 +296,15 @@
             <div class="upload-wrap">
                 Choose from
                 <div class="btn-container">
-                    <div class="upload-btn-from-device">
-                        <label class="label-device" for="file">
+                    <label class="upload-btn-from-device" for="file">
+                        <h4 class="label-device">
                             Gallery
-                        </label>
-                    </div>
+                        </h4>
+                    </label>
                 </div>
                 <div class="btn-container">
-                    <div class="upload-btn-from-memehouse">
-                        <label class="label-memehouse" for="file">
+                    <div class="upload-btn-from-memehouse" on:click={callToMemeHouse}>
+                        <label class="label-memehouse">
                             Meme House
                         </label>
                     </div>
@@ -286,10 +314,9 @@
                 <input id="file" type="file" name="file" class="file-field" bind:files={file}/>
             </div>
         </div>
-    </div>
-
-            
+    </div>      
 </div>
+
 <div class="sub-navbar-wrap">
     <div class="sub-navbar-left">
         {#if stage != 0}
