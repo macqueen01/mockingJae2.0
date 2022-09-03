@@ -458,7 +458,7 @@ m12884 -502 c107 -39 186 -147 205 -284 10 -76 -3 -622 -18 -724 -5 -38 -13
         <img src={blog} class="sample">
     </div>
     {#if add_mode == false} 
-    <div class="memes" transition:fade={{duration: 200, easing: quintOut}}>
+    <div class="memes" transition:fade|local={{duration: 200, easing: quintOut}}>
         <div class="first-meme" on:click={() => {first = true; second = third = forth = false; setTimeout(() => {first = false}, 2000)}}>
             <img src="/icons/svgs/star.svg" height="100%">
             {#if first}
@@ -574,9 +574,9 @@ fill="#f5f5f5" stroke="none">
         </div>
     </div>
     {:else}
-    <div class="show-memes" transition:slide={{delay:200, duration:400, easing:quintOut}}>
+    <div class="show-memes" transition:slide|local={{delay:200, duration:400, easing:quintOut}}>
         {#each memes as meme}
-            <div class="rest-meme" transition:scale={{delay:600, duration:400, easing:quintOut, start: 0.5, opacity: 0}}>
+            <div class="rest-meme">
                 <img src="/icons/svgs/star.svg" height="100%">
             </div>
         {:else}

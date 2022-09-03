@@ -100,11 +100,11 @@
     import { onMount, afterUpdate } from 'svelte';
     import { scale, fade } from 'svelte/transition';
     import Frame from './Frame.svelte';
-    import Posting from './Posting.svelte';
+    import Posting from '../../forms/Posting.svelte';
 
     
     let blogger = "jae"
-    let title = "When you went seoul and saw mom and dad having sex"
+    let title = "When you went back home and saw mom and dad having sex"
     let memes = [1,2,3,4];
     let blog = "/icons/svgs/Global_panel.svg"
     let date = "4 hours ago"
@@ -114,6 +114,7 @@
     $: add_mode_meme_id = null;
     let HOME;
     let height;
+    let status;
     
     onMount(() => {
         height = HOME.offsetHeight;
@@ -152,7 +153,7 @@
 </script>
 
 {#if !add_mode && !add_mode_meme_id}
-<div class="home-wrap" on:wheel={updateHandler} on:touchmove={updateHandler} bind:this={HOME} transition:fade={{duration:400, opacity: 0}}>
+<div class="home-wrap" on:wheel={updateHandler} on:touchmove={updateHandler} bind:this={HOME}>
     <Frame blogger={blogger} title={title} date={date} memes={memes} blog={blog} on:add-meme={addMemeHandler}/>
     <Frame blogger={blogger} title={title} date={date} memes={memes} blog={blog} />
     <Frame blogger={blogger} title={title} date={date} memes={memes} blog={blog} />
@@ -180,13 +181,13 @@
 
 
     {#if !refresh}
-        <div class="pull-container" transition:scale={{duration: 400, opacity: 0, start: 0}}>
+        <div class="pull-container" transition:scale|local={{duration: 400, opacity: 0, start: 0}}>
             <div class="pull-wrap">
                 <h4 class="pull-line">Pull to load more<h4>
             </div>
         </div>
     {:else if refresh}
-        <div class="refresher" transition:scale={{duration: 300, opacity: 0, start: 0}}>
+        <div class="refresher" transition:scale|local={{duration: 300, opacity: 0, start: 0}}>
             <div class="refresher-inner-wrap">
                 <img src="/icons/svgs/pizzaSpinner.svg" height="25" width="25" class="pizza-spinner-refresh">
             </div>
