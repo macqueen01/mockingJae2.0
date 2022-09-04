@@ -45,14 +45,15 @@
 
     import SetTitle from "./PostComponents/SetTitle.svelte";
     import SetFile from "./PostComponents/SetFile.svelte";
-    import Sample from "./PostComponents/Sample.svelte";
 
     
 
-    $: _title = "";
-    $: _file = "";
-    $: _created_at = "";
-    $: _crafter = "";
+    let _title = "";
+    let _file = "";
+    let _created_at = "";
+    let _crafter = "";
+    let is_local = false;
+    let local_meme_context = null;
     
     var dispatch = createEventDispatcher();
     
@@ -71,6 +72,11 @@
     function resetFile(e) {
         _file = e.detail.file;
         stage = e.detail.stage;
+        if (e.detail.is_local) {
+            local_meme_context = e.detail.file_context;
+            is_local = e.detail.is_local;
+            
+        }
         console.log("file reset:", _file);
     }
 
@@ -92,7 +98,7 @@
 <div class="content-wrap" transition:fade={{delay: 300, duration:400, opacity: 0}}>
     <div class="posting-container">
         {#if stage == 0}
-            <Sample />
+            <SetFile on:postFile={resetFile} file={_file} stage={stage} local_meme_context={local_meme_context} is_local={is_local}/>
         {:else if stage == 1}
             <SetTitle on:postTitle={resetTitle} title={_title} stage={stage} />
         {:else if stage == 2}

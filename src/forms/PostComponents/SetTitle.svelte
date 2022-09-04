@@ -35,6 +35,14 @@
             title_rule_result = title_rule_detail.is_short_enough;
             
     }
+    
+    function goBack() {
+        stage -= 1;
+        dispatch('postTitle', {
+            title: title,
+            stage: stage
+        })
+    }
 
 </script>
 
@@ -262,7 +270,7 @@
 <div class="sub-navbar-wrap">
     <div class="sub-navbar-left">
         {#if stage != 0}
-            <button class="nav-left"></button> 
+            <button class="nav-left" on:click={goBack}></button> 
         {/if}
     </div>
     <div class="sub-navbar-right">

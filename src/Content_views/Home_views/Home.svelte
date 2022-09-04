@@ -100,7 +100,15 @@
     import { onMount, afterUpdate } from 'svelte';
     import { scale, fade } from 'svelte/transition';
     import Frame from './Frame.svelte';
-    import Sample from './Sample.svelte';
+    
+    //import { goto } from '$app/navigation';
+    //const preserveScroll = (url) => {
+        //goto(url, {
+            //noscroll: true,
+        //})
+    //}
+    
+    // call by using {() => preserveScroll('/')}
 
     
     let blogger = "jae"
@@ -109,15 +117,16 @@
     let blog = "/icons/svgs/Global_panel.svg"
     let date = "4 hours ago"
     $: height_from_bottom = 10000;
-    $: refresh = false;
-    $: add_mode = false;
-    $: add_mode_meme_id = null;
+    let refresh = false;
+    let add_mode = false;
+    let add_mode_meme_id = null;
     let HOME;
     let height;
     let status;
     
     onMount(() => {
         height = HOME.offsetHeight;
+        height_from_bottom = height - window.scrollY;
     })         
     
     afterUpdate(() => {
@@ -141,7 +150,14 @@
                 refresh = false;
             }, 3000)
         }
+    }
     
+    $: {
+        if (add_mode && add_mode_meme_id) {
+            //goto('URL TO MEME HOUSE', {
+                //noscroll: true
+            //})
+        }
     }
     
     function addMemeHandler(e) {
@@ -152,7 +168,7 @@
 
 </script>
 
-{#if !add_mode && !add_mode_meme_id}
+
 <div class="home-wrap" on:wheel={updateHandler} on:touchmove={updateHandler} bind:this={HOME}>
     <Frame blogger={blogger} title={title} date={date} memes={memes} blog={blog} on:add-meme={addMemeHandler}/>
     <Frame blogger={blogger} title={title} date={date} memes={memes} blog={blog} />
@@ -194,6 +210,3 @@
         </div>
     {/if}
 </div>
-{:else if add_mode && add_mode_meme_id}
-    <Sample />
-{/if}
