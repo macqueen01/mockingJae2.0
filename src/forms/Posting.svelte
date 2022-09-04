@@ -45,13 +45,14 @@
 
     import SetTitle from "./PostComponents/SetTitle.svelte";
     import SetFile from "./PostComponents/SetFile.svelte";
+    import Sample from "./PostComponents/Sample.svelte";
 
     
 
-    let _title = "";
-    let _file = "";
-    let _created_at = "";
-    let _crafter = "";
+    $: _title = "";
+    $: _file = "";
+    $: _created_at = "";
+    $: _crafter = "";
     
     var dispatch = createEventDispatcher();
     
@@ -91,7 +92,7 @@
 <div class="content-wrap" transition:fade={{delay: 300, duration:400, opacity: 0}}>
     <div class="posting-container">
         {#if stage == 0}
-            <SetFile on:postFile={resetFile} title={_file} stage={stage} />
+            <Sample />
         {:else if stage == 1}
             <SetTitle on:postTitle={resetTitle} title={_title} stage={stage} />
         {:else if stage == 2}

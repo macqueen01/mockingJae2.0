@@ -100,7 +100,7 @@
     import { onMount, afterUpdate } from 'svelte';
     import { scale, fade } from 'svelte/transition';
     import Frame from './Frame.svelte';
-    import Posting from '../../forms/Posting.svelte';
+    import Sample from './Sample.svelte';
 
     
     let blogger = "jae"
@@ -195,5 +195,5 @@
     {/if}
 </div>
 {:else if add_mode && add_mode_meme_id}
-    <Posting meme_id={add_mode_meme_id}/>
+    <Sample />
 {/if}

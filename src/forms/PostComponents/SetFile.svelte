@@ -239,7 +239,8 @@
         position: absolute;
         top: 0;
         bottom: 0;
-        z-index: 20
+        z-index: 20;
+        background-color: black;
     }
 
 </style>
