@@ -24,13 +24,13 @@
     
     var dispatch = createEventDispatcher();
     export let dev = true;
-    export let loggedIn = false;
+    export let loggedIn = true;
     
     //for dev option time set to 0
     let load_time = 0;
     
     let signIn = false;
-    let posting = true;
+    let posting = false;
     let loaded = false;
 
     

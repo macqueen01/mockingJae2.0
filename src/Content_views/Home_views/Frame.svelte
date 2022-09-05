@@ -246,7 +246,21 @@
         margin: 0;
         padding: 0;
         top: 0;
-        
+    }
+    
+    .facad {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: rgba(36, 36, 36, 0.3);
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        top: 0;
+        top: 0;
+        left: 0;
     }
 
     
@@ -269,6 +283,7 @@
     
     let TITLE;
     let EXTENDEDTITLE;
+    let meme_selected_index;
     var dispatch = createEventDispatcher();
     
     $: first = false;
@@ -292,6 +307,15 @@
             meme_id: meme_id,
             add_mode: true
         })
+    }
+    
+    function facadOpen(index) {
+        meme_selected_index = index;
+        setTimeout(() => {
+            if (meme_selected_index == index) {
+                meme_selected_index = null;
+            }
+        }, 4000)
     }
     
     
@@ -575,9 +599,36 @@ fill="#f5f5f5" stroke="none">
     </div>
     {:else}
     <div class="show-memes" transition:slide|local={{delay:200, duration:400, easing:quintOut}}>
-        {#each memes as meme}
-            <div class="rest-meme">
+        {#each memes as meme, index}
+            <div class="rest-meme" on:click={() => facadOpen(index)}>
                 <img src="/icons/svgs/star.svg" height="100%">
+                {#if meme_selected_index == index}
+                <div class="facad" transition:fade|local={{duration: 200}}>
+                    <img src="/icons/svgs/Dm.svg" height="30">
+                    <a>
+                        <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+ width="30" height="30" viewBox="0 0 792.000000 792.000000"
+ preserveAspectRatio="xMidYMid meet">
+
+                            <g transform="translate(0.000000,792.000000) scale(0.100000,-0.100000)"
+fill="#f5f5f5" stroke="none">
+                                <path d="M4047 7664 c-126 -27 -217 -78 -338 -189 -36 -33 -84 -72 -107 -87
+-93 -64 -172 -262 -172 -431 1 -335 295 -564 665 -517 188 23 322 71 435 156
+111 84 164 178 206 365 21 94 25 133 22 225 -3 104 -5 114 -40 186 -113 227
+-396 351 -671 292z"/>
+                                <path d="M4032 4675 c-97 -27 -161 -67 -276 -171 -122 -110 -161 -163 -200
+-266 -105 -279 -51 -563 141 -738 230 -210 586 -181 883 74 115 99 205 242
+230 371 25 122 -7 268 -86 392 -47 75 -194 219 -266 261 -132 78 -310 110
+-426 77z"/>
+                                <path d="M3923 1595 c-190 -52 -342 -165 -399 -300 -9 -22 -18 -71 -20 -110
+-1 -38 -12 -106 -23 -150 -70 -264 -35 -496 98 -647 134 -151 331 -204 520
+-139 78 28 85 29 123 15 118 -41 260 23 382 173 112 140 150 272 128 448 -19
+151 -75 283 -188 441 -86 122 -232 226 -373 268 -66 19 -177 20 -248 1z"/>
+                            </g>
+                        </svg>
+                    </a>
+                </div>
+                {/if}
             </div>
         {:else}
             <div class="no-meme-placeholder">
