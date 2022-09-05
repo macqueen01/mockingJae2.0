@@ -8,7 +8,7 @@
 
     function bubbleUpTitle() {
         console.log("bubble up title...")
-        stage = 1; 
+        stage = 2; 
         dispatch('postTitle', {
             title: title,
             stage: stage
@@ -163,13 +163,13 @@
         padding: 0;
         margin: 0;
         padding-bottom: 3px;
-        font-size: 20px;
+        font-size: 12px;
         font-family: popRegular;
     }
     
     .title-requirement-container {
         width: 60%;
-        height: 150px;
+        height: 45px;
         padding: 0;
         margin: 0;
         display: flex;

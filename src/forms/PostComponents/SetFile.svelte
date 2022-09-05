@@ -396,10 +396,23 @@
 
 </style>
 
-<script>
+
+<script>
     import { onMount } from 'svelte';
-
+
+
     export let stage = 0;
+    // let FILE be either of two forms:
+    //      - a file object passed from file input. 
+    //        This case, is_local should be set false
+    //      - a customed meme object with attributes described bellow.
+    //        This case, is_local should be set true
+    //              @ id: id of meme uniquely set                    (INT)
+    //              @ thumbnail: file object                         (FILE)
+    //              @ title: title of the meme                       (STR)
+    //              @ crafter: id of User created the meme           (INT)
+    //              @ approved: if meme object is approved by Jae    (BOOL)
+    //              @ src: source of the file object                 (STR)
     export let file;
     
     
@@ -407,7 +420,6 @@
     let memes = [];
     let meme_selected_index;
     let meme_selected_id;
-    export let local_meme_context;
     let preview_src = "";
     
     for (let i = 0; i < 10; i++) {
@@ -441,12 +453,13 @@
         if (file && !is_local) {
             preview_src = URL.createObjectURL(file[0])
         } else if (file && is_local) {
-            preview_src = local_meme_context.src;
+            preview_src = file.src; 
         }
     }
     
     let meme_house_open = false;
-    
+    
+
 
     import { createEventDispatcher } from 'svelte';
     import { slide, fade, draw } from 'svelte/transition';
@@ -457,18 +470,12 @@
     function bubbleUpFile() {
         console.log("bubble up file...")
         stage = 1;
-        if (is_local) {
-            dispatch('postFile', {
-                file: file,
-                file_context: local_meme_context,
-                stage: stage
-            }); 
-        } else {
-            dispatch('postFile', {
-                file: file,
-                stage: stage
-            });
-        }
+
+        dispatch('postFile', {
+            file: file,
+            stage: stage,
+            is_local: is_local
+        })
     }
     
     function callToMemeHouse() {
@@ -493,16 +500,18 @@
     function goForth() {
         meme_house_open = false;
         is_local = true;
-        file = memes[meme_selected_index].thumbnail;
-        local_meme_context = memes[meme_selected_index];
-        console.log("meme selected :", local_meme_context);
+        file = memes[meme_selected_index];
+        console.log("meme selected :", file, "local :", is_local);
     }
     
     function initHandler() {
-        is_local = false;
+        if (!is_local) {
+            URL.revokeObjectURL(preview_src);
+            preview_src = "";
+        } else {
+            is_local = false
+        }
         file = null;
-        local_meme_context = null;
-        URL.revokeObjectURL();
     }
     
 
@@ -570,9 +579,9 @@ fill="#59545f" stroke="none">
             <div class="meme-container">
                 {#each memes as meme, index}
                     <div class="meme" id="meme-{index}" on:click={() => {selectMeme(index, meme.id)}}>
-                        {meme.thumbnail}
+                        <img src={meme.src} height="150px" width="150px" alt="{meme.title}">
                         {#if meme_selected_index == index}
-                            <div class="facad" transition:fade|local={{duration: 500, delay: 200, easing: quintOut}}>
+                            <div class="facad" transition:fade|local={{duration: 500, easing: quintOut}}>
                                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
  width="50px" height="50px" viewBox="0 0 1584.000000 1584.000000"
  preserveAspectRatio="xMidYMid meet">
@@ -736,7 +745,7 @@ fill="#3acc37" stroke="none">
 <div class="sub-navbar-wrap">
     <div class="sub-navbar-left">
         {#if file}
-            <button class="nav-left" on:click={initHandler}></button> 
+            <button class="nav-left" on:click={initHandler}></button>
         {/if}
     </div>
     <div class="sub-navbar-right">
@@ -745,3 +754,4 @@ fill="#3acc37" stroke="none">
         {/if}
     </div>
 </div>
+
