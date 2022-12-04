@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # This repo is no longer maintained. Consider using `npm init vite` and selecting the `svelte` option or — if you want a full-fledged app framework and don't mind using pre-1.0 software — use [SvelteKit](https://kit.svelte.dev), the official application framework for Svelte.
 
 ---
@@ -40,11 +41,44 @@ If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommen
 ## Building and running in production mode
 
 To create an optimised version of the app:
+=======
+# create-svelte
+
+Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+
+## Creating a project
+
+If you're seeing this, you've probably already done this step. Congrats!
+
+```bash
+# create a new project in the current directory
+npm create svelte@latest
+
+# create a new project in my-app
+npm create svelte@latest my-app
+```
+
+## Developing
+
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+```bash
+npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
+
+## Building
+
+To create a production version of your app:
+>>>>>>> 3a9d901 (migration from svelte to sveltekit in initial phase completed, now moving on continuing building up in sveltekit)
 
 ```bash
 npm run build
 ```
 
+<<<<<<< HEAD
 You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
 
 
@@ -105,3 +139,8 @@ Then, from within your project folder:
 npm run build
 surge public my-project.surge.sh
 ```
+=======
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+>>>>>>> 3a9d901 (migration from svelte to sveltekit in initial phase completed, now moving on continuing building up in sveltekit)
