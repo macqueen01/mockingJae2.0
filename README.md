@@ -1,4 +1,4 @@
-#Brand New Mocking Jae
+# Brand New Mocking Jae
 
 Mocking Jae service is a personal blog-like social service that will allow users to interact only through images.
 These images will become a root or part of MEME. 
@@ -16,14 +16,3 @@ npm run start
 Frontend server will run in your local port [5173].
 Simple as that. Done!
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
