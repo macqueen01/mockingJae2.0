@@ -1,7 +1,8 @@
 <script>
-	import { onMount, afterUpdate } from 'svelte';
+	import { onMount, afterUpdate, beforeUpdate } from 'svelte';
 	import { scale, fade } from 'svelte/transition';
 	import Frame from '$lib/ContentViews/Frame.svelte';
+	import StickyFrame from '../../components/ContentViews/StickyFrame.svelte';
 
 	//import { goto } from '$app/navigation';
 	//const preserveScroll = (url) => {
@@ -21,6 +22,8 @@
 	let refresh = false;
 	let add_mode = false;
 	let add_mode_meme_id = null;
+	let y_position = 0;
+	let autoscroll;
 	let HOME;
 	let height;
 	let status;
@@ -33,6 +36,7 @@
 	//afterUpdate(() => {
 	//    height = HOME.offsetHeight;
 	//})
+ 
 
 	//function updateHandler(e) {
 	//    if (HOME) {
@@ -40,18 +44,18 @@
 	//    }
 	//}
 
-	$: {
+	//$: {
 		// loads more blogs
 		// fetches blogs from server then updates HOME
-		if (height_from_bottom <= 840 && !refresh) {
-			refresh = true;
-			height_from_bottom = 1000;
-			setTimeout(() => {
-				window.scrollTo(0, height - 900);
-				refresh = false;
-			}, 3000);
-		}
-	}
+	//	if (height_from_bottom <= 840 && !refresh) {
+	//		refresh = true;
+	//		height_from_bottom = 1000;
+	//		setTimeout(() => {
+	//			window.scrollTo(0, height - 900);
+	//			refresh = false;
+	//		}, 3000);
+	//	}
+	//}
 
 	$: {
 		if (add_mode && add_mode_meme_id) {
@@ -61,14 +65,22 @@
 		}
 	}
 
-	function addMemeHandler(e) {
+	function addMemeHandle(e) {
 		add_mode = e.detail.add_mode;
 		add_mode_meme_id = e.detail.meme_id;
 	}
+
+	function frameUpdateHandle(e) {
+		
+	}
 </script>
 
-<div class="home-wrap" on:wheel={updateHandler} on:touchmove={updateHandler} bind:this={HOME}>
-	<Frame {blogger} {title} {date} {memes} {blog} on:add-meme={addMemeHandler} />
+<svelte:window bind:scrollY={y_position} />
+
+<div class="home-wrap" >
+	<StickyFrame {blogger} {title} {date} {memes} {blog} on:add-meme={addMemeHandle} />
+	<!--
+	<Frame {blogger} {title} {date} {memes} {blog} on:add-meme={addMemeHandle} on:show-more={frameUpdateHandle}/>
 	<Frame {blogger} {title} {date} {memes} {blog} />
 	<Frame {blogger} {title} {date} {memes} {blog} />
 	<Frame {blogger} {title} {date} {memes} {blog} />
@@ -78,7 +90,6 @@
 		<div class="date-line-wrap">
 			<h4 class="date-line">
 				June 3 2020
-				<h4 />
 			</h4>
 		</div>
 	</div>
@@ -90,14 +101,13 @@
 		<div class="date-line-wrap">
 			<h4 class="date-line">
 				June. 4. 2020
-				<h4 />
 			</h4>
 		</div>
 	</div>
 
 	<Frame {blogger} {title} {date} {memes} {blog} />
 	<Frame {blogger} {title} {date} {memes} {blog} />
-
+	
 	{#if !refresh}
 		<div class="pull-container" transition:scale|local={{ duration: 400, opacity: 0, start: 0 }}>
 			<div class="pull-wrap">
@@ -119,6 +129,7 @@
 			</div>
 		</div>
 	{/if}
+	-->
 </div>
 
 <style>

@@ -44,7 +44,7 @@
 </script>
 
 <div class="wrapper">
-	<div class="content-wrap" transition:fade={{ delay: 300, duration: 400, opacity: 0 }}>
+	<div class="content-wrap" in:fade={{ delay: 300, duration: 400, opacity: 0 }}>
 		<div class="posting-container">
 			{#if stage == 0}
 				<SetFile on:postFile={resetFile} file={_file} {stage} {is_local} />

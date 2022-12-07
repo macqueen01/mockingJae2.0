@@ -4,25 +4,25 @@
 
 <div class="navbar">
 	<div class="nav-content-wrap">
-		<div class="logo-wrap">
+		<a class="logo-wrap" href="/login">
 			{#if !loggedIn}
 				<img src="/icons/svgs/Me.svg" height="30" alt="JAE" />
 			{:else}
 				<img src="/icons/svgs/Jae_footer.svg" height="27" alt="JAE" />
 			{/if}
-		</div>
+		</a>
 		<div class="menu-wrap">
 			{#if !loggedIn}
-				<div class="home-wrap">
+				<a class="home-wrap" href="/memehouse">
 					<img src="/icons/svgs/Home.svg" height="28" alt="home" />
-				</div>
-				<div class="global-wrap">
+				</a>
+				<a class="global-wrap" href="/memehouse">
 					<img src="/icons/svgs/Global.svg" height="28" alt="global" />
-				</div>
+				</a>
 			{/if}
-			<div class="dm-wrap">
+			<a class="dm-wrap" href="/memehouse">
 				<img src="/icons/svgs/Dm.svg" height="28" alt="dm" />
-			</div>
+			</a>
 		</div>
 	</div>
 </div>
