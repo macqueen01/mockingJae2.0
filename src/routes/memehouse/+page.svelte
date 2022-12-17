@@ -1,5 +1,7 @@
 <script>
 	import { onMount, afterUpdate, beforeUpdate } from 'svelte';
+	import { disableScrollHandling } from '$app/navigation';
+
 	import { scale, fade } from 'svelte/transition';
 	import Frame from '$lib/ContentViews/Frame.svelte';
 	import StickyFrame from '../../components/ContentViews/StickyFrame.svelte';
@@ -12,6 +14,12 @@
 	//}
 
 	// call by using {() => preserveScroll('/')}
+
+	onMount(async () => {
+        disableScrollHandling();
+    });
+
+	
 
 	let blogger = 'jae';
 	let title = 'When you went back home and saw mom and dad having sex';
@@ -78,6 +86,9 @@
 <svelte:window bind:scrollY={y_position} />
 
 <div class="home-wrap" >
+	<StickyFrame {blogger} {title} {date} {memes} {blog} on:add-meme={addMemeHandle} />
+	<StickyFrame {blogger} {title} {date} {memes} {blog} on:add-meme={addMemeHandle} />
+	<StickyFrame {blogger} {title} {date} {memes} {blog} on:add-meme={addMemeHandle} />
 	<StickyFrame {blogger} {title} {date} {memes} {blog} on:add-meme={addMemeHandle} />
 	<!--
 	<Frame {blogger} {title} {date} {memes} {blog} on:add-meme={addMemeHandle} on:show-more={frameUpdateHandle}/>

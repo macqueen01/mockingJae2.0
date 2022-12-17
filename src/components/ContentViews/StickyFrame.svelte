@@ -1,13 +1,14 @@
 <script>
-  import SubMemes from './SubMemes.svelte';
+	import SubMemes from './SubMemes.svelte';
 
-  import BlogHeader from './BlogHeader.svelte';
+	import BlogHeader from './BlogHeader.svelte';
 
 	import { beforeUpdate, onMount } from 'svelte';
 	import { fade, fly, slide, scale } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import { createEventDispatcher } from 'svelte';
-    import BlogMain from "./BlogMain.svelte";
+    import { disableScrollHandling } from '$app/navigation'
+	import BlogMain from './BlogMain.svelte';
 
 	export let blogger = 'Jae';
 	export let title = 'mocking jae mocking jay';
@@ -18,17 +19,12 @@
 
 	let TITLE;
 	let EXTENDEDTITLE;
-    let y_position;
+	let y_position;
 	var dispatch = createEventDispatcher();
 
-	$: first = false;
-	$: second = false;
-	$: third = false;
-	$: forth = false;
 	$: add_mode = false;
 
 	$: visible = false;
-
 
 	function bubbleUpAddMode() {
 		dispatch('add-meme', {
@@ -37,19 +33,24 @@
 		});
 	}
 
-    function positionBubbleUp() {
-        console.log(y_position);
-    }
-</script>
+	function positionBubbleUp() {
+		console.log(y_position);
+	}
 
+    onMount(async () => {
+        disableScrollHandling();
+    });
+
+
+</script>
 
 <svelte:window bind:scrollY={y_position} />
 
 <div class="home-container">
-    <BlogMain {blog}>
-        <div slot="blog-header"><BlogHeader {blogger} {title} {memes} {date}/></div>		
-        <div slot="blog-memes"><SubMemes {add_mode}/></div>
-    </BlogMain>
+	<BlogMain {blog}>
+		<div slot="blog-header"><BlogHeader {blogger} {title} {memes} {date} /></div>
+		<div slot="blog-memes"><SubMemes {add_mode} /></div>
+	</BlogMain>
 </div>
 
 <style>
