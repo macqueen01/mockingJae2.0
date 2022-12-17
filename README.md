@@ -15,4 +15,3 @@ npm run start
  
 Frontend server will run in your local port [5173].
 Simple as that. Done!
-
