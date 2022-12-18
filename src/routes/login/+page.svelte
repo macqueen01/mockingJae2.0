@@ -6,12 +6,15 @@
 	let email = '';
 	let password = '';
 
+
 	function switchToSignIn() {
 		console.log('switching to signIn');
 		dispatch('mode', {
 			signIn: true
 		});
 	}
+
+
 </script>
 
 <div class="wrapper">
@@ -232,6 +235,7 @@
 		outline: none;
 		background: transparent;
 		font-size: 15px;
+		z-index: 3;
 	}
 
 	.password-input {
@@ -240,6 +244,7 @@
 		outline: none;
 		background: transparent;
 		font-size: 15px;
+		z-index: 3;
 	}
 
 	.username-label,
@@ -253,7 +258,7 @@
 		position: absolute;
 		top: 6px;
 		left: 7px;
-		-webkit-transition: all 0.2s ease-in;
+		-webkit-transition: all 0.3s cubic-bezier(1, 0.03, 0, 0.97);
 		color: gray;
 	}
 
@@ -268,7 +273,7 @@
 		position: absolute;
 		top: -13px;
 		left: -2px;
-		-webkit-transition: all 0.2s ease-in;
+		-webkit-transition: all 0.3s cubic-bezier(1, 0.03, 0, 0.97);
 	}
 
 	.login-input:focus-within label {

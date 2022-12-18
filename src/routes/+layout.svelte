@@ -70,7 +70,7 @@
         background-color: #59545f;
         margin: 0;
         padding: 0;
-        overflow-y: auto;
+        /* overflow-y: auto; */
     }
 	
 	.spin-container {
