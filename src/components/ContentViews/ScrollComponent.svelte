@@ -1,26 +1,26 @@
 <script>
-	import { onMount } from 'svelte';
-	import { TweenMax, Linear } from 'gsap';
+	import { onMount } from "svelte";
 	import * as fs from 'fs';
 
-	let height = 1000;
 	let position = 0;
 	// there should be an ideal ratio of height to length
 	// this is subject to be studied
-	let length = 300;
 	let images = [];
 	let canvas;
 	let ctx;
 	let startY;
 	let standardHeight;
 	let container;
-
+	let scrollsElement;
 	let maxH;
 	let maxW;
 
-	export let src = '';
-	export let alt = '';
-	export let dir = 'http://172.20.10.9:5173/sequences/demo_lesserafim_sequence/lesserafim';
+	export let src;
+	export let alt;
+	export let dir;
+	export let length = 400;
+	export let height = 10000;
+	export let id = 0;
 
 	// image length * image quality is inverse propotional to loading speed.
 	// can't drop the image quality under particular threshold, so video length (image length) should be regulated
@@ -31,37 +31,13 @@
 		.map((_, index) => `${dir}${index + 1}.jpeg`);
 
 	onMount(() => {
-		/*
-		var obj = { curImg: 0 };
-
-		var tween = TweenMax.to(obj, 0.5, {
-			curImg: imgs.length - 1,
-			roundProps: 'curImg',
-			repeat: 1,
-			immediateRender: true,
-			ease: Linear.easeNone,
-			onUpdate: updateSrc
-		});
-
-		var controller = new ScrollMagic.Controller();
-
-		var scene = new ScrollMagic.Scene({ triggerElement: '#trigger', duration: height })
-			.setTween(tween)
-			.addIndicators()
-			.addTo(controller);
-
-		function updateSrc() {
-			src = imgs[obj.curImg];
-		}
-		*/
 		if (canvas) {
 			ctx = canvas.getContext('2d');
 		}
 		preload(imgs);
 		standardHeight = heightFraction();
-		startY = initY();
+		startY = initPosition().y;
 	});
-
 	//let length = fs.readdirSync(base_sequence_dir).length;
 
 	function preload(lst) {
@@ -74,18 +50,21 @@
 				images[i].onload = () => drawImage(0);
 			}
 		}
-		console.log('done');
 	}
 
 	function heightFraction() {
 		if (canvas && imgs) {
-			console.log(height, imgs.length, height / imgs.length);
 			return height / imgs.length;
 		}
 	}
 
-	function initY() {
-		return 0;
+	function initPosition() {
+		if (scrollsElement) {
+			return {
+				x: scrollsElement.getBoundingClientRect()['x'],
+				y: scrollsElement.getBoundingClientRect()['y']
+			}
+		}
 	}
 
 	function drawImage(frameIndex) {
@@ -95,24 +74,32 @@
 	}
 
 	function scrollHandle() {
-		if (images && standardHeight) {
+		if (position < startY) {
+			return null;
+		}
+
+		else if (images && standardHeight) {
 			let index = getFrameIndex();
 			images[index].onload = () => {
 				drawImage(index);
 			};
 			requestAnimationFrame(() => drawImage(index));
 		}
+
+
 	}
 
 	function getFrameIndex() {
 		if (canvas && images && standardHeight) {
-			let index = Math.floor(position / standardHeight);
+			let index = Math.floor((position - startY) / standardHeight);
 			if (index < 0) return 0;
 			if (!images[index]) return images.length - 1;
 
 			return index;
 		}
 	}
+
+	// Following tools only interv
 
 	function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
 		var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
@@ -134,18 +121,12 @@
 			canvas.width = sizePair.width;
 		}
 	}
-
-	$: {
-		if (canvas) {
-			ctx = canvas.getContext('2d');
-		}
-	}
 </script>
 
 <svelte:window bind:scrollY={position} on:scroll={scrollHandle} />
 
 
-	<div class="scroll-view">
+	<div class="scroll-view" bind:this={scrollsElement}>
 		<div class="sequence-wrap" style="--height: {height};">
 			<div class="img-container" bind:this={container}>
 				<canvas bind:this={canvas} />
