@@ -1,6 +1,5 @@
 <script>
 	import { onMount } from "svelte";
-	import util from "util";
 	import * as fs from 'fs';
 
 	let position = 0;
@@ -44,11 +43,20 @@
 			.catch(e => {
 				loaded = false;
 				console.log(e)
-			})
+			});
 	});
 	//let length = fs.readdirSync(base_sequence_dir).length;
 
-	function preload(lst, callback) {
+	const preloadPromise = new Promise((resolve, reject) => {
+		let preloadResult = preload(lst);
+		if (preloadResult == true) {
+			resolve(true);
+		} else {
+			reject(preloadResult);
+		}
+	});
+
+	function preload(lst) {
 		try {
 			for (let i = 0; i < lst.length; i++) {
 			const image = new Image();
@@ -59,14 +67,13 @@
 				images[i].onload = () => drawImage(0);
 			}
 
-			return callback(null, e);
+			return true;
 		}
 		} catch (e) {
-			return callback(e, null);
+			return e;
 		}
 	}
 
-	const preloadPromise = util.promisify(preload);
 
 	function heightFraction() {
 		if (canvas && imgs) {
@@ -177,11 +184,6 @@
 	canvas {
 		width: 100%;
 		height: 100%;
-	}
-
-	.navbar-scrolls {
-		background: transparent;
-		border-bottom: none;
 	}
 </style>
 
