@@ -5,6 +5,7 @@
 	import { scale, fade } from 'svelte/transition';
 	import Frame from '$lib/ContentViews/Frame.svelte';
 	import StickyFrame from '../../components/ContentViews/StickyFrame.svelte';
+    import { scrolls } from '../../components/store';
 
 	//import { goto } from '$app/navigation';
 	//const preserveScroll = (url) => {
@@ -17,6 +18,7 @@
 
 	onMount(async () => {
         disableScrollHandling();
+		scrolls.update(() => false);
     });
 
 	

@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from "svelte";
+	import util from "util";
 	import * as fs from 'fs';
 
 	let position = 0;
@@ -14,13 +15,13 @@
 	let scrollsElement;
 	let maxH;
 	let maxW;
+	let loaded = false;
 
 	export let src;
 	export let alt;
 	export let dir;
 	export let length = 400;
 	export let height = 10000;
-	export let id = 0;
 
 	// image length * image quality is inverse propotional to loading speed.
 	// can't drop the image quality under particular threshold, so video length (image length) should be regulated
@@ -34,14 +35,22 @@
 		if (canvas) {
 			ctx = canvas.getContext('2d');
 		}
-		preload(imgs);
-		standardHeight = heightFraction();
-		startY = initPosition().y;
+		preloadPromise(imgs)
+			.then((result) => {
+				loaded = true;
+				standardHeight = heightFraction();
+				startY = initPosition().y;
+			})
+			.catch(e => {
+				loaded = false;
+				console.log(e)
+			})
 	});
 	//let length = fs.readdirSync(base_sequence_dir).length;
 
-	function preload(lst) {
-		for (let i = 0; i < lst.length; i++) {
+	function preload(lst, callback) {
+		try {
+			for (let i = 0; i < lst.length; i++) {
 			const image = new Image();
 			image.src = lst[i];
 			images.push(image);
@@ -49,8 +58,15 @@
 			if (i == 0) {
 				images[i].onload = () => drawImage(0);
 			}
+
+			return callback(null, e);
+		}
+		} catch (e) {
+			return callback(e, null);
 		}
 	}
+
+	const preloadPromise = util.promisify(preload);
 
 	function heightFraction() {
 		if (canvas && imgs) {
@@ -127,28 +143,20 @@
 
 
 	<div class="scroll-view" bind:this={scrollsElement}>
+		{#if loaded}
 		<div class="sequence-wrap" style="--height: {height};">
 			<div class="img-container" bind:this={container}>
 				<canvas bind:this={canvas} />
 			</div>
 		</div>
+		{:else}
+		<div class="waiting-block">
+			No
+		</div>
+		{/if}
 	</div>
 
 <style>
-	.home-wrap {
-		width: 100vw;
-		height: 100%;
-		background-color: transparent;
-		margin: 0;
-		padding: 0;
-		padding-top: 50px;
-		padding-bottom: 15px;
-	}
-
-	.hidden-prefetch {
-		display: none;
-	}
-
 	.scroll-view {
 		height: 100%;
 		width: 100%;
@@ -157,8 +165,8 @@
 	.img-container {
 		width: 100%;
 		position: sticky;
-		top: 5%;
 		height: 100vh;
+		top: 0;
 	}
 
 	.sequence-wrap {
@@ -169,6 +177,11 @@
 	canvas {
 		width: 100%;
 		height: 100%;
+	}
+
+	.navbar-scrolls {
+		background: transparent;
+		border-bottom: none;
 	}
 </style>
 

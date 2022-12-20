@@ -1,10 +1,15 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
+	import { scrolls } from '$lib/routes'; 
 
 	var dispatch = createEventDispatcher();
 
 	let email = '';
 	let password = '';
+
+	onMount(() => {
+		scrolls.update(() => false);
+	})
 
 
 	function switchToSignIn() {

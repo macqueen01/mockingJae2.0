@@ -40,6 +40,7 @@
 <script>
 
     import { createEventDispatcher } from 'svelte';
+    import { scrolls } from '$lib/store'; 
 
     import SetName from "$lib/Forms/SignInComponents/SetName.svelte";
     import SetEmail from "$lib/Forms/SignInComponents/SetEmail.svelte";
@@ -51,6 +52,10 @@
     let password = "";
     
     var dispatch = createEventDispatcher();
+
+    onMount(() => {
+		scrolls.update(() => false);
+	})
     
     //stage starts from 0 to 3 where stage 3 sends POST request
     //to the server with the info gathered through stage 0 to 2.

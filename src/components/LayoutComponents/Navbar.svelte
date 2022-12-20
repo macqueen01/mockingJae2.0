@@ -1,18 +1,25 @@
 <script>
-	export let loggedIn;
+	import { scrolls } from "$lib/routes";
+	import { loggedIn } from "$lib/states";
+
+	let navscrolls = false;
+
+	$: {
+		navscrolls = $scrolls;
+	}
 </script>
 
-<div class="navbar">
+<div class="navbar" class:navscrolls>
 	<div class="nav-content-wrap">
 		<a class="logo-wrap" href="/login">
-			{#if !loggedIn}
+			{#if !$loggedIn}
 				<img src="/icons/svgs/Me.svg" height="30" alt="JAE" />
 			{:else}
 				<img src="/icons/svgs/Jae_footer.svg" height="27" alt="JAE" />
 			{/if}
 		</a>
 		<div class="menu-wrap">
-			{#if !loggedIn}
+			{#if !$loggedIn}
 				<a class="home-wrap" href="/memehouse">
 					<img src="/icons/svgs/Home.svg" height="28" alt="home" />
 				</a>
@@ -40,6 +47,7 @@
 		width: 100%;
 		background-color: #59545f;
 		z-index: 10;
+		transition: all 0.3s;
 	}
 
 	.nav-content-wrap {
@@ -69,5 +77,10 @@
 		margin-top: auto;
 		margin-bottom: auto;
 		gap: 10px;
+	}
+
+	.navscrolls {
+		background: transparent;
+		border-bottom: none;
 	}
 </style>
