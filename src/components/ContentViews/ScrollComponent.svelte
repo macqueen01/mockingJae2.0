@@ -34,7 +34,7 @@
 		if (canvas) {
 			ctx = canvas.getContext('2d');
 		}
-		preloadPromise(imgs)
+		preloadPromise()
 			.then((result) => {
 				loaded = true;
 				standardHeight = heightFraction();
@@ -48,7 +48,7 @@
 	//let length = fs.readdirSync(base_sequence_dir).length;
 
 	const preloadPromise = new Promise((resolve, reject) => {
-		let preloadResult = preload(lst);
+		let preloadResult = preload(imgs);
 		if (preloadResult == true) {
 			resolve(true);
 		} else {
@@ -57,7 +57,7 @@
 	});
 
 	function preload(lst) {
-		try {
+
 			for (let i = 0; i < lst.length; i++) {
 			const image = new Image();
 			image.src = lst[i];
@@ -68,9 +68,6 @@
 			}
 
 			return true;
-		}
-		} catch (e) {
-			return e;
 		}
 	}
 
