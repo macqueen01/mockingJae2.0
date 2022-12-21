@@ -7,13 +7,13 @@
 		scrolls.update(() => true);
 	});
 
-	let common_dir = "http://localhost:5173/sequences/";
+	let common_dir = "http://172.20.10.9:5173/sequences/";
 
 	let scrolls_items = [
 		{
-			src: `${common_dir}satisfaction2_sequence/satisfaction`,
-			length: 921,
-			height: 6000,
+			src: `${common_dir}satisfaction_sequence/satisfaction`,
+			length: 532,
+			height: 3000,
 			startY: 0,
 			id: 0
 		},
@@ -28,7 +28,7 @@
 		scrolls_items.push({
 			src: `${common_dir}satisfaction2_sequence/satisfaction`,
 			length: 921,
-			height: 6000,
+			height: 2000,
 			startY: endY,
 			id: newId
 		});
@@ -45,19 +45,25 @@
 				behavior: "smooth",
 			});
 			current += 1;
+			goingDown = false;
 		}
 	}
 
+	
 	function rollupHandle(e, index) {
-		if (current == index && index != 0) {
+		
+		if (index != 0) {
 			let startY = e.detail.endY - scrolls_items[index - 1].height;
 			window.scrollTo({
 				top: startY,
 				behavior: "smooth"
 			});
-			current -= 1;
 		}
+		
 	}
+
+
+	
 </script>
 
 <div class="home-wrap">
@@ -75,6 +81,7 @@
 			on:newload={(e) => newHandle(e, index)}
 			on:rollup={(e) => rollupHandle(e, index)}
 		/>
+		<!--on:rollup={(e) => rollupHandle(e, index)}-->
 	{/each}
 
 	<!--

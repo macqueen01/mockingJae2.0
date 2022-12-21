@@ -1,8 +1,8 @@
 <script>
-  import SvelteHeader from './SvelteHeader.svelte';
+	import SvelteHeader from './SvelteHeader.svelte';
 
-	import { onMount, createEventDispatcher } from "svelte";
-	import * as fs from "fs";
+	import { onMount, createEventDispatcher } from 'svelte';
+	import * as fs from 'fs';
 
 	let position = 0;
 	// there should be an ideal ratio of height to length
@@ -18,6 +18,13 @@
 	let maxW;
 	let loaded = false;
 	let lastIndex;
+	let scrollDisabler = (e) => {
+		return true;
+	};
+	let focus = false;
+	export let goingDown = false;
+
+	
 
 	let dispatch = new createEventDispatcher();
 
@@ -31,12 +38,12 @@
 	// ==> under ( <= 1000 ) is ideal
 	// This also depends on the scroll speed.
 	const imgs = Array(length)
-		.fill("")
+		.fill('')
 		.map((_, index) => `${src}${index + 1}.jpeg`);
 
 	onMount(() => {
 		if (canvas) {
-			ctx = canvas.getContext("2d");
+			ctx = canvas.getContext('2d');
 		}
 
 		preload(imgs);
@@ -52,8 +59,8 @@
 			if (i == 0) {
 				image.onload = () => drawImage(0);
 			} else if (i == lst.length - 1) {
-				dispatch("load", {
-					load: true,
+				dispatch('load', {
+					load: true
 				});
 				standardHeight = heightFraction();
 				console.log(startY);
@@ -69,45 +76,60 @@
 
 	function drawImage(frameIndex) {
 		if (canvas && ctx) {
-			ctx.drawImage(
-				images[frameIndex],
-				0,
-				0,
-				canvas.width,
-				canvas.height
-			);
+			ctx.drawImage(images[frameIndex], 0, 0, canvas.width, canvas.height);
 		}
 	}
 
 	function scrollHandle() {
-		if ((position - startY < 30)) {
-			dispatch("rollup", {
+		if (!(images && standardHeight)) {
+			return null;
+		}
+
+		if (startY - position > 30 && focus) {
+			focus = false;
+			dispatch('rollup', {
 				endY: startY
 			});
-			console.log('call')
-		} else if (position < startY) {
-			return null;
-		} else if (images && standardHeight) {
+
+		}
+
+		/*
+
+		if (0 < startY - position && startY - position > 20) {
+			window.scrollTo({
+				top: startY,
+				behavior: 'instant'
+			});
+		}
+
+		*/
+
+		if (!images && !standardHeight) return null; 
+
+		if (startY < position && height + startY - position > 30) {
+			focus = true;
 			let index = getFrameIndex();
 			images[index].onload = () => {
 				drawImage(index);
 			};
 			requestAnimationFrame(() => drawImage(index));
 
-			if (index >= lastIndex * 0.4) {
-				dispatch("reload", {
-					endY: startY + height,
-				});
-			}
-			
-			if ((index >= lastIndex * 0.85)) {
-				dispatch("newload", {
+			if (index >= lastIndex * 0.5) {
+				dispatch('reload', {
 					endY: startY + height
 				});
 			}
-		} 
+		}
+		
+		if (0 < height + startY - position && height + startY - position < 20 && focus) {
+			window.scrollTo({
+				top: startY + height,
+				behavior: 'smooth'
+			});
+			setTimeout(() => focus = false, 500)
+			console.log("called")
+		}
 	}
-
 
 	function getFrameIndex() {
 		if (canvas && images && standardHeight) {
@@ -127,9 +149,10 @@
 		return {
 			width: srcWidth * ratio,
 			height: srcHeight * ratio,
-			ratio: ratio,
+			ratio: ratio
 		};
 	}
+	/*
 
 	function setCanvasSize() {
 		if (container && canvas) {
@@ -147,6 +170,10 @@
 			canvas.width = sizePair.width;
 		}
 	}
+	*/
+
+	// Custom actions
+
 </script>
 
 <svelte:window bind:scrollY={position} on:scroll={scrollHandle} />
@@ -155,7 +182,7 @@
 	<div class="sequence-wrap" style="--height: {height};">
 		<div class="sequence-container" bind:this={container}>
 			<div class="header-content-container">
-				<SvelteHeader></SvelteHeader>
+				<SvelteHeader />
 				<canvas bind:this={canvas} />
 			</div>
 		</div>

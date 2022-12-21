@@ -7,6 +7,7 @@
     export let length;
     export let height;
     export let startY;
+    export let goingDown;
 
     let loaded = false;
     let dispatch = createEventDispatcher();
@@ -39,6 +40,7 @@
             {length}
             {height}
             {startY}
+            {goingDown}
         />
     </div>
 </ScrollLoader>
