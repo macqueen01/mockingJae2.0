@@ -1,55 +1,79 @@
 <script>
-    import { onMount } from 'svelte';
-	import ScrollComponent from '../../components/ContentViews/ScrollComponent.svelte';
-    import ScrollLoader from '../../components/ContentViews/ScrollLoader.svelte';
-    import Scrolls from '../../components/ContentViews/Scrolls.svelte';
-	import { scrolls } from '../../components/routes';
+	import { onMount } from "svelte";
+	import Scrolls from "$lib/Scrolls/Scrolls.svelte";
+	import { scrolls } from "$lib/routes";
 
 	onMount(() => {
 		scrolls.update(() => true);
-	})
+	});
 
-	let common_dir = "http://localhost:5173/sequences/"
-	let window;
+	let common_dir = "http://localhost:5173/sequences/";
 
 	let scrolls_items = [
 		{
 			src: `${common_dir}satisfaction2_sequence/satisfaction`,
 			length: 921,
 			height: 6000,
-			startY: 0
-		}
+			startY: 0,
+			id: 0
+		},
 	];
+
+	let current = 0;
 
 	function reloadHandle(e) {
 		let endY = e.detail.endY;
+		let newId = scrolls_items.length 
 
 		scrolls_items.push({
 			src: `${common_dir}satisfaction2_sequence/satisfaction`,
 			length: 921,
 			height: 6000,
-			startY: endY
+			startY: endY,
+			id: newId
 		});
 
 		scrolls_items = scrolls_items;
-		// then should smoothly scroll to the next scrolls 
+		// then should smoothly scroll to the next scrolls
+	}
+
+	function newHandle(e, id) {
+		if (current == id) {
+			let startY = e.detail.endY;
+			window.scrollTo({
+				top: startY,
+				behavior: "smooth",
+			});
+			current += 1;
+		}
+	}
+
+	function rollupHandle(e, index) {
+		if (current == index && index != 0) {
+			let startY = e.detail.endY - scrolls_items[index - 1].height;
+			window.scrollTo({
+				top: startY,
+				behavior: "smooth"
+			});
+			current -= 1;
+		}
 	}
 </script>
 
-<svelte:window />
-
 <div class="home-wrap">
 	<!--
-	<ScrollComponent dir={`${common_dir}light_lesserafim_sequence/lesserafim`} length={300} height={2000}/>
-	<ScrollComponent dir={`${common_dir}heavy_satisfaction_sequence/satisfaction`} length={1063} height={8000}/>
-	-->
-	{#each scrolls_items as scroll, id}
+		<ScrollComponent dir={`${common_dir}light_lesserafim_sequence/lesserafim`} length={300} height={2000}/>
+		<ScrollComponent dir={`${common_dir}heavy_satisfaction_sequence/satisfaction`} length={1063} height={8000}/>
+		-->
+	{#each scrolls_items as scroll, index}
 		<Scrolls
 			src={scroll.src}
 			length={scroll.length}
 			height={scroll.height}
 			startY={scroll.startY}
 			on:reload|once={reloadHandle}
+			on:newload={(e) => newHandle(e, index)}
+			on:rollup={(e) => rollupHandle(e, index)}
 		/>
 	{/each}
 
@@ -61,7 +85,8 @@
 <style>
 	.home-wrap {
 		width: 100vw;
-		height: 100%;
+		height: 100vh;
+		left: 0;
 		background-color: transparent;
 		margin: 0;
 		padding: 0;

@@ -4,8 +4,8 @@
 
 	import { scale, fade } from 'svelte/transition';
 	import Frame from '$lib/ContentViews/Frame.svelte';
-	import StickyFrame from '../../components/ContentViews/StickyFrame.svelte';
-    import { scrolls } from '../../components/store';
+	import StickyFrame from '$lib/ContentViews/StickyFrame.svelte';
+    import { scrolls } from '$lib/components/store';
 
 	//import { goto } from '$app/navigation';
 	//const preserveScroll = (url) => {

@@ -18,6 +18,7 @@
 				<img src="/icons/svgs/Jae_footer.svg" height="27" alt="JAE" />
 			{/if}
 		</a>
+		{#if !navscrolls}
 		<div class="menu-wrap">
 			{#if !$loggedIn}
 				<a class="home-wrap" href="/memehouse">
@@ -31,6 +32,7 @@
 				<img src="/icons/svgs/Dm.svg" height="28" alt="dm" />
 			</a>
 		</div>
+		{/if}
 	</div>
 </div>
 
@@ -80,6 +82,13 @@
 	}
 
 	.navscrolls {
+		display: flex;
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 50px;
+		width: fit-content;
+		transition: all 0.3s;
 		background: transparent;
 		border-bottom: none;
 	}

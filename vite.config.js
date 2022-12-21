@@ -8,13 +8,6 @@ const config = {
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	},
-	
-	resolve: {
-		alias: {
-			promisify: promisify
-		}
-	}
-	
 };
 
 export default config;
