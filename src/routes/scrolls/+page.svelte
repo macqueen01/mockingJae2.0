@@ -1,13 +1,14 @@
 <script>
-	import { onMount } from "svelte";
-	import Scrolls from "$lib/Scrolls/Scrolls.svelte";
-	import { scrolls } from "$lib/routes";
+	import { onMount } from 'svelte';
+	import Scrolls from '$lib/Scrolls/Scrolls.svelte';
+	import { scrolls } from '$lib/routes';
 
 	onMount(() => {
 		scrolls.update(() => true);
 	});
 
-	let common_dir = "http://172.20.10.9:5173/sequences/";
+	let common_dir = 'http://172.20.10.9:5173/sequences/';
+	let position;
 
 	let scrolls_items = [
 		{
@@ -16,14 +17,14 @@
 			height: 3000,
 			startY: 0,
 			id: 0
-		},
+		}
 	];
 
 	let current = 0;
 
 	function reloadHandle(e) {
 		let endY = e.detail.endY;
-		let newId = scrolls_items.length 
+		let newId = scrolls_items.length;
 
 		scrolls_items.push({
 			src: `${common_dir}satisfaction2_sequence/satisfaction`,
@@ -38,33 +39,40 @@
 	}
 
 	function newHandle(e, id) {
+
 		if (current == id) {
 			let startY = e.detail.endY;
 			window.scrollTo({
 				top: startY,
-				behavior: "smooth",
+				behavior: 'smooth'
 			});
 			current += 1;
 			goingDown = false;
 		}
 	}
 
-	
 	function rollupHandle(e, index) {
-		
 		if (index != 0) {
 			let startY = e.detail.endY - scrolls_items[index - 1].height;
 			window.scrollTo({
 				top: startY,
-				behavior: "smooth"
+				behavior: 'smooth'
 			});
+			current -= 1;
 		}
-		
 	}
 
+	function statusHandle(e) {
 
-	
+	}
+
+	$: console.log(current)
 </script>
+
+<svelte:window bind:scrollY={position} />
+
+<div class="viewport" style="--top: {position}">
+</div>
 
 <div class="home-wrap">
 	<!--
@@ -80,6 +88,8 @@
 			on:reload|once={reloadHandle}
 			on:newload={(e) => newHandle(e, index)}
 			on:rollup={(e) => rollupHandle(e, index)}
+			on:status={(e) => statusHandle(e, index)}
+			
 		/>
 		<!--on:rollup={(e) => rollupHandle(e, index)}-->
 	{/each}
@@ -90,6 +100,13 @@
 </div>
 
 <style>
+	.viewport {
+		width: 100%;
+		height: 100vh;
+		position: fixed;
+		left: 0;
+		z-index: 8;
+	}
 	.home-wrap {
 		width: 100vw;
 		height: 100vh;
@@ -102,4 +119,10 @@
 		padding-bottom: 15px;
 		*/
 	}
+
+	:global(body, html, main) {
+		background-color: black;
+	}
+
+
 </style>

@@ -1,10 +1,15 @@
 <script>
     import { onMount, createEventDispatcher } from "svelte";
+
+    export let active = false;
+
+    $: console.log(active)
+
 </script>
 
 <div class="scrolls-header">
     <div class="header-content">
-        <div class="present-holder">
+        <div class="present-holder" class:active>
             <a class="dm-wrap" href="/memehouse">
                 <img src="/icons/svgs/Dm.svg" height="28" alt="dm" />
             </a>
@@ -30,5 +35,14 @@
         padding-top: 4px;
         flex-direction: row;
         height: 100%;
+    }
+
+    .present-holder {
+        opacity: 0%;
+        transition: all 0.3s;
+    }
+
+    .active {
+        opacity: 100%;
     }
 </style>

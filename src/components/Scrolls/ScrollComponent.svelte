@@ -10,19 +10,14 @@
 	let images = [];
 	let canvas;
 	let ctx;
-	export let startY;
+	
 	let standardHeight;
 	let container;
 	let scrollsElement;
-	let maxH;
-	let maxW;
-	let loaded = false;
 	let lastIndex;
-	let scrollDisabler = (e) => {
-		return true;
-	};
 	let focus = false;
-	export let goingDown = false;
+	let active = true;
+	let headerActive = true;
 
 	
 
@@ -32,6 +27,8 @@
 	export let alt;
 	export let length;
 	export let height;
+	export let startY;
+	export let order;
 
 	// image length * image quality is inverse propotional to loading speed.
 	// can't drop the image quality under particular threshold, so video length (image length) should be regulated
@@ -80,33 +77,34 @@
 		}
 	}
 
-	function scrollHandle() {
+	function scrollHandle(e) {
+		// only allow scroll when ready
 		if (!(images && standardHeight)) {
+			e.preventDefault();
 			return null;
 		}
-
+		
+		// rolls up to the scrolls before the current scrolls
 		if (startY - position > 30 && focus) {
-			focus = false;
+			focus = true;
+			headerActive = false;
 			dispatch('rollup', {
 				endY: startY
 			});
-
 		}
 
-		/*
-
-		if (0 < startY - position && startY - position > 20) {
-			window.scrollTo({
-				top: startY,
-				behavior: 'instant'
-			});
+		// start showing header
+		if (startY - position < 400) {
+			headerActive = true;
 		}
 
-		*/
+		// stop showing header
+		if (position + window.screenY < startY) {
+			headerActive = false;
+			focus = false;
+		}
 
-		if (!images && !standardHeight) return null; 
-
-		if (startY < position && height + startY - position > 30) {
+		if (startY < position && height + startY - position > 30 && headerActive) {
 			focus = true;
 			let index = getFrameIndex();
 			images[index].onload = () => {
@@ -119,15 +117,24 @@
 					endY: startY + height
 				});
 			}
+
+			if (index == lastIndex) {
+				focus = false;
+				dispatch('push', {
+					id: order,
+					focus: focus
+				});
+			}
 		}
 		
-		if (0 < height + startY - position && height + startY - position < 20 && focus) {
+		if (0 < height + startY - position && height + startY - position < 50 && focus) {
+			/*
 			window.scrollTo({
 				top: startY + height,
-				behavior: 'smooth'
+				behavior: 'instant'
 			});
-			setTimeout(() => focus = false, 500)
-			console.log("called")
+			*/
+			focus = false;
 		}
 	}
 
@@ -173,7 +180,6 @@
 	*/
 
 	// Custom actions
-
 </script>
 
 <svelte:window bind:scrollY={position} on:scroll={scrollHandle} />
@@ -182,7 +188,7 @@
 	<div class="sequence-wrap" style="--height: {height};">
 		<div class="sequence-container" bind:this={container}>
 			<div class="header-content-container">
-				<SvelteHeader />
+				<SvelteHeader active={headerActive}/>
 				<canvas bind:this={canvas} />
 			</div>
 		</div>
@@ -217,5 +223,8 @@
 	canvas {
 		width: 100%;
 		height: 100%;
+		border-radius: 15px;
 	}
+
+
 </style>

@@ -67,7 +67,7 @@
         align-items: center;
         width: 100%;
         height: fit-content;
-        background-color: #59545f;
+        background: transparent;
         margin: 0;
         padding: 0;
         /* overflow-y: auto; */
