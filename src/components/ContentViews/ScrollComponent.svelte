@@ -1,5 +1,5 @@
 <script>
-  import SvelteHeader from './SvelteHeader.svelte';
+	import SvelteHeader from "./SvelteHeader.svelte";
 
 	import { onMount, createEventDispatcher } from "svelte";
 	import * as fs from "fs";
@@ -80,11 +80,11 @@
 	}
 
 	function scrollHandle() {
-		if ((position - startY < 30)) {
+		if (position - startY < 30) {
 			dispatch("rollup", {
-				endY: startY
+				endY: startY,
 			});
-			console.log('call')
+			console.log("call");
 		} else if (position < startY) {
 			return null;
 		} else if (images && standardHeight) {
@@ -99,15 +99,14 @@
 					endY: startY + height,
 				});
 			}
-			
-			if ((index >= lastIndex * 0.85)) {
+
+			if (index >= lastIndex * 0.85) {
 				dispatch("newload", {
-					endY: startY + height
+					endY: startY + height,
 				});
 			}
-		} 
+		}
 	}
-
 
 	function getFrameIndex() {
 		if (canvas && images && standardHeight) {
@@ -155,7 +154,7 @@
 	<div class="sequence-wrap" style="--height: {height};">
 		<div class="sequence-container" bind:this={container}>
 			<div class="header-content-container">
-				<SvelteHeader></SvelteHeader>
+				<SvelteHeader />
 				<canvas bind:this={canvas} />
 			</div>
 		</div>
@@ -171,8 +170,8 @@
 	.sequence-container {
 		width: 100%;
 		position: sticky;
-		height: 100vh;
-		top: 0;
+		height: 85vh;
+		top: 55px;
 	}
 
 	.header-content-container {
@@ -190,5 +189,6 @@
 	canvas {
 		width: 100%;
 		height: 100%;
+		border-radius: 20px;
 	}
 </style>

@@ -7,12 +7,12 @@
 		scrolls.update(() => true);
 	});
 
-	let common_dir = 'http://172.20.10.9:5173/sequences/';
+	let common_dir = 'http://localhost:5173/sequences/';
 	let position;
 
 	let scrolls_items = [
 		{
-			src: `${common_dir}satisfaction_sequence/satisfaction`,
+			src: `${common_dir}satisfaction2_sequence/satisfaction`,
 			length: 532,
 			height: 3000,
 			startY: 0,
@@ -107,6 +107,7 @@
 		left: 0;
 		z-index: 8;
 	}
+	
 	.home-wrap {
 		width: 100vw;
 		height: 100vh;

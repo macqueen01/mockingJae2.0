@@ -1,8 +1,8 @@
 <script>
-	import SvelteHeader from './SvelteHeader.svelte';
+	import SvelteHeader from "./SvelteHeader.svelte";
 
-	import { onMount, createEventDispatcher } from 'svelte';
-	import * as fs from 'fs';
+	import { onMount, createEventDispatcher } from "svelte";
+	import * as fs from "fs";
 
 	let position = 0;
 	// there should be an ideal ratio of height to length
@@ -10,7 +10,7 @@
 	let images = [];
 	let canvas;
 	let ctx;
-	
+
 	let standardHeight;
 	let container;
 	let scrollsElement;
@@ -18,8 +18,6 @@
 	let focus = false;
 	let active = true;
 	let headerActive = true;
-
-	
 
 	let dispatch = new createEventDispatcher();
 
@@ -35,12 +33,12 @@
 	// ==> under ( <= 1000 ) is ideal
 	// This also depends on the scroll speed.
 	const imgs = Array(length)
-		.fill('')
+		.fill("")
 		.map((_, index) => `${src}${index + 1}.jpeg`);
 
 	onMount(() => {
 		if (canvas) {
-			ctx = canvas.getContext('2d');
+			ctx = canvas.getContext("2d");
 		}
 
 		preload(imgs);
@@ -56,8 +54,8 @@
 			if (i == 0) {
 				image.onload = () => drawImage(0);
 			} else if (i == lst.length - 1) {
-				dispatch('load', {
-					load: true
+				dispatch("load", {
+					load: true,
 				});
 				standardHeight = heightFraction();
 				console.log(startY);
@@ -73,7 +71,13 @@
 
 	function drawImage(frameIndex) {
 		if (canvas && ctx) {
-			ctx.drawImage(images[frameIndex], 0, 0, canvas.width, canvas.height);
+			ctx.drawImage(
+				images[frameIndex],
+				0,
+				0,
+				canvas.width,
+				canvas.height
+			);
 		}
 	}
 
@@ -83,13 +87,13 @@
 			e.preventDefault();
 			return null;
 		}
-		
+
 		// rolls up to the scrolls before the current scrolls
 		if (startY - position > 30 && focus) {
 			focus = true;
 			headerActive = false;
-			dispatch('rollup', {
-				endY: startY
+			dispatch("rollup", {
+				endY: startY,
 			});
 		}
 
@@ -104,7 +108,11 @@
 			focus = false;
 		}
 
-		if (startY < position && height + startY - position > 30 && headerActive) {
+		if (
+			startY < position &&
+			height + startY - position > 30 &&
+			headerActive
+		) {
 			focus = true;
 			let index = getFrameIndex();
 			images[index].onload = () => {
@@ -113,21 +121,25 @@
 			requestAnimationFrame(() => drawImage(index));
 
 			if (index >= lastIndex * 0.5) {
-				dispatch('reload', {
-					endY: startY + height
+				dispatch("reload", {
+					endY: startY + height,
 				});
 			}
 
 			if (index == lastIndex) {
 				focus = false;
-				dispatch('push', {
+				dispatch("push", {
 					id: order,
-					focus: focus
+					focus: focus,
 				});
 			}
 		}
-		
-		if (0 < height + startY - position && height + startY - position < 50 && focus) {
+
+		if (
+			0 < height + startY - position &&
+			height + startY - position < 50 &&
+			focus
+		) {
 			/*
 			window.scrollTo({
 				top: startY + height,
@@ -156,7 +168,7 @@
 		return {
 			width: srcWidth * ratio,
 			height: srcHeight * ratio,
-			ratio: ratio
+			ratio: ratio,
 		};
 	}
 	/*
@@ -188,7 +200,7 @@
 	<div class="sequence-wrap" style="--height: {height};">
 		<div class="sequence-container" bind:this={container}>
 			<div class="header-content-container">
-				<SvelteHeader active={headerActive}/>
+				<SvelteHeader active={headerActive} />
 				<canvas bind:this={canvas} />
 			</div>
 		</div>
@@ -204,8 +216,8 @@
 	.sequence-container {
 		width: 100%;
 		position: sticky;
-		height: 100vh;
-		top: 0;
+		height: 85vh;
+		top: 55px;
 	}
 
 	.header-content-container {
@@ -223,8 +235,6 @@
 	canvas {
 		width: 100%;
 		height: 100%;
-		border-radius: 15px;
+		border-radius: 18px;
 	}
-
-
 </style>
