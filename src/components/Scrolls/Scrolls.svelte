@@ -8,6 +8,7 @@
     export let height;
     export let startY;
     export let goingDown;
+    export let scrolls_id;
 
     let loaded = false;
     let dispatch = createEventDispatcher();
@@ -41,6 +42,7 @@
             {height}
             {startY}
             {goingDown}
+            {scrolls_id}
         />
     </div>
 </ScrollLoader>

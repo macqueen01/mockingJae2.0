@@ -2,12 +2,16 @@
     import { onMount, createEventDispatcher } from "svelte";
 
     export let active = false;
+    export let status = 0;
 
     $: console.log(active)
 
 </script>
 
 <div class="scrolls-header">
+    <div class="status-bar-wrap">
+        <div class="status-bar" style="--status: {status};"></div>
+    </div>
     <div class="header-content">
         <div class="present-holder" class:active>
             <a class="dm-wrap" href="/memehouse">
@@ -24,6 +28,26 @@
         height: 50px;
         top: 0;
         z-index: 6;
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
+        overflow: hidden;
+    }
+
+    .status-bar-wrap {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 4px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .status-bar {
+        height: 100%;
+        width: calc(var(--status) * 100vw);
+        background-color: #ebe5d1;
+        border-radius: 1px;
     }
 
     .header-content {

@@ -1,15 +1,23 @@
 <script>
 	import SvelteHeader from "./SvelteHeader.svelte";
 
+	import { fetchScrollsFromId } from '$lib/api';
+
 	import { onMount, createEventDispatcher } from "svelte";
-	import * as fs from "fs";
+	import axios from 'axios';
+
 
 	let position = 0;
+	let status = 0;
 	// there should be an ideal ratio of height to length
 	// this is subject to be studied
 	let images = [];
+	let imgs = [];
 	let canvas;
 	let ctx;
+	let windowHeight;
+	let windowWidth;
+	let loaded = false;
 
 	let standardHeight;
 	let container;
@@ -27,38 +35,54 @@
 	export let height;
 	export let startY;
 	export let order;
+	export let scrolls_id = 2;
 
 	// image length * image quality is inverse propotional to loading speed.
 	// can't drop the image quality under particular threshold, so video length (image length) should be regulated
 	// ==> under ( <= 1000 ) is ideal
 	// This also depends on the scroll speed.
-	const imgs = Array(length)
-		.fill("")
-		.map((_, index) => `${src}${index + 1}.jpeg`);
 
-	onMount(() => {
+	onMount(async () => {
 		if (canvas) {
 			ctx = canvas.getContext("2d");
 		}
+
+		imgs = await fetchScrolls(scrolls_id)
 
 		preload(imgs);
 	});
 	//let length = fs.readdirSync(base_sequence_dir).length;
 
+	async function fetchScrolls(id) {
+		// fetches scrolls with given id
+		// after fetching, parses into image list (in order of Cell index)
+		// returns the parsed image list
+
+		let result = await axios(
+			fetchScrollsFromId(id)
+		);
+		height = result.data.height
+
+		return scrollsParser(result.data);
+	}
+
+	function scrollsParser(data) {
+		return data.cells // This is a list
+	}
+
 	function preload(lst) {
 		lastIndex = lst.length - 1;
 		for (let i = 0; i < lst.length; i++) {
 			const image = new Image();
-			image.src = lst[i];
+			image.src = lst[i].url;
 			images.push(image);
 			if (i == 0) {
-				image.onload = () => drawImage(0);
+				image.onload = () => {drawImage(0)};
 			} else if (i == lst.length - 1) {
-				dispatch("load", {
-					load: true,
-				});
 				standardHeight = heightFraction();
-				console.log(startY);
+				image.onload = () => dispatch("load", {
+					load: true,
+				});;
 			}
 		}
 	}
@@ -78,6 +102,7 @@
 				canvas.width,
 				canvas.height
 			);
+			status = (frameIndex + 1) / (lastIndex + 1);
 		}
 	}
 
@@ -120,7 +145,7 @@
 			};
 			requestAnimationFrame(() => drawImage(index));
 
-			if (index >= lastIndex * 0.5) {
+			if (index >= 1) {
 				dispatch("reload", {
 					endY: startY + height,
 				});
@@ -194,14 +219,14 @@
 	// Custom actions
 </script>
 
-<svelte:window bind:scrollY={position} on:scroll={scrollHandle} />
+<svelte:window bind:scrollY={position} on:scroll={scrollHandle} bind:innerWidth={windowWidth} bind:innerHeight={windowHeight}/>
 
 <div class="scroll-view-loaded" bind:this={scrollsElement}>
 	<div class="sequence-wrap" style="--height: {height};">
 		<div class="sequence-container" bind:this={container}>
 			<div class="header-content-container">
-				<SvelteHeader active={headerActive} />
-				<canvas bind:this={canvas} />
+				<SvelteHeader active={headerActive} status={status}/>
+				<canvas width="{windowWidth}" height="720" bind:this={canvas} />
 			</div>
 		</div>
 	</div>
@@ -211,12 +236,13 @@
 	.scroll-view-loaded {
 		height: fit-content;
 		width: 100%;
+		border-bottom: solid 3px black;
 	}
 
 	.sequence-container {
 		width: 100%;
 		position: sticky;
-		height: 85vh;
+		height: calc(100vh - 55px);
 		top: 55px;
 	}
 

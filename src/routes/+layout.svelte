@@ -89,7 +89,7 @@
         height: fit-content;
         position: fixed;
         top: 0;
-        z-index: 4;
+        z-index: 5;
     }
 
     .panel-wrap {

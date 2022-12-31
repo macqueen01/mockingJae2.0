@@ -40,15 +40,17 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #59545f;
+        background-color: black;
         position: absolute;
         top: 0;
         width: 100vw;
         height: 100vh;
+        transition: all 0.3s;
     }
 
     .loaded {
         display: none;
+        background-color: transparent;
     }
 
     .view {

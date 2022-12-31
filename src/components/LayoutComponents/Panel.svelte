@@ -33,7 +33,7 @@
 	.panel-container {
 		display: flex;
 		position: fixed;
-		z-index: 40;
+		z-index: 10;
 		bottom: -45px;
 		left: 0;
 		right: 0;
