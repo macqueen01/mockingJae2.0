@@ -1,11 +1,13 @@
 <script>
 	import SvelteHeader from "./SvelteHeader.svelte";
 
-	import { fetchScrollsFromId } from '$lib/api';
+	import { fetchScrollsFromId } from "$lib/api";
 
 	import { onMount, createEventDispatcher } from "svelte";
-	import axios from 'axios';
-
+	import axios from "axios";
+	import untar from "js-untar";
+	import Buffer from "buffer";
+	import { create } from "ipfs-http-client";
 
 	let position = 0;
 	let status = 0;
@@ -35,7 +37,13 @@
 	export let height;
 	export let startY;
 	export let order;
-	export let scrolls_id = 2;
+	export let scrolls_id = 11;
+
+	const client = create({
+		host: "ipfs.io",
+		port: 443,
+		protocol: "https",
+	});
 
 	// image length * image quality is inverse propotional to loading speed.
 	// can't drop the image quality under particular threshold, so video length (image length) should be regulated
@@ -47,28 +55,70 @@
 			ctx = canvas.getContext("2d");
 		}
 
-		imgs = await fetchScrolls(scrolls_id)
+		imgs = await fetchScrolls(scrolls_id);
 
 		preload(imgs);
 	});
-	//let length = fs.readdirSync(base_sequence_dir).length;
 
 	async function fetchScrolls(id) {
 		// fetches scrolls with given id
 		// after fetching, parses into image list (in order of Cell index)
 		// returns the parsed image list
 
-		let result = await axios(
-			fetchScrollsFromId(id)
-		);
-		height = result.data.height
+		let result = await axios(fetchScrollsFromId(id));
 
-		return scrollsParser(result.data);
+		height = result.data.height;
+		length = result.data.length;
+		let hash = result.data.ipfs_hash;
+
+		let urlList = [];
+
+		// fills urlList with 0 in LENGTH
+		for (let i = 0; i < length; i++) {
+			urlList.push(0);
+		}
+
+		let tarArchive = Buffer.Buffer.alloc(0);
+
+		// Send an HTTP GET request to the /api/v0/get endpoint to download the IPFS directory as a tar archive
+		const tarArchiveBuffer = client.get(hash, { archive: true });
+		for await (const chunk of tarArchiveBuffer) {
+			tarArchive = Buffer.Buffer.concat([tarArchive, chunk]);
+		}
+
+		const buffer = new Uint8Array(tarArchive).buffer;
+
+		const files = await untar(buffer);
+
+		for (let i = 0; i < files.length; i++) {
+			if (
+				files[i].name.endsWith(".jpeg") ||
+				files[i].name.endsWith(".jpg")
+			) {
+				const blob = blobbifyFile(files[i]);
+				let index = blob.name.split("/").pop().split(".")[0] - 1;
+				urlList[index] = { name: blob.name, url: blob.url };
+			}
+		}
+
+		return urlList;
 	}
 
-	function scrollsParser(data) {
-		return data.cells // This is a list
+	function blobbifyFile(file) {
+		const data_blob = file.blob;
+		const img_blob = new Blob([data_blob], { type: 'image/jpeg' })
+		const url = URL.createObjectURL(img_blob);
+		return { name: file.name, url: url };
 	}
+
+	function removeBlob(blob) {
+		if (blob) {
+			URL.revokeObjectURL(blob.url);
+			return true;
+		}
+		return false;
+	}
+
 
 	function preload(lst) {
 		lastIndex = lst.length - 1;
@@ -77,12 +127,15 @@
 			image.src = lst[i].url;
 			images.push(image);
 			if (i == 0) {
-				image.onload = () => {drawImage(0)};
+				image.onload = () => {
+					drawImage(0);
+				};
 			} else if (i == lst.length - 1) {
 				standardHeight = heightFraction();
-				image.onload = () => dispatch("load", {
-					load: true,
-				});;
+				image.onload = () =>
+					dispatch("load", {
+						load: true,
+					});
 			}
 		}
 	}
@@ -114,6 +167,18 @@
 		}
 
 		// rolls up to the scrolls before the current scrolls
+		if (e.deltaY < 0) {
+			if (startY - window.scrollY > 30) {
+				focus = true;
+				headerActive = false;
+				e.preventDefault();
+				dispatch("rollup", {
+					endY: startY,
+				});
+			}
+		}
+
+		/*
 		if (startY - position > 30 && focus) {
 			focus = true;
 			headerActive = false;
@@ -121,6 +186,7 @@
 				endY: startY,
 			});
 		}
+		*/
 
 		// start showing header
 		if (startY - position < 400) {
@@ -219,14 +285,19 @@
 	// Custom actions
 </script>
 
-<svelte:window bind:scrollY={position} on:scroll={scrollHandle} bind:innerWidth={windowWidth} bind:innerHeight={windowHeight}/>
+<svelte:window
+	bind:scrollY={position}
+	on:scroll={scrollHandle}
+	bind:innerWidth={windowWidth}
+	bind:innerHeight={windowHeight}
+/>
 
 <div class="scroll-view-loaded" bind:this={scrollsElement}>
 	<div class="sequence-wrap" style="--height: {height};">
 		<div class="sequence-container" bind:this={container}>
 			<div class="header-content-container">
-				<SvelteHeader active={headerActive} status={status}/>
-				<canvas width="{windowWidth}" height="720" bind:this={canvas} />
+				<SvelteHeader active={headerActive} {status} />
+				<canvas width={windowWidth} height="720" bind:this={canvas} />
 			</div>
 		</div>
 	</div>
