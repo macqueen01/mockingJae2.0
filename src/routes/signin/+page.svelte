@@ -1,13 +1,92 @@
+<script>
+    import { createEventDispatcher } from "svelte";
+    import { scrolls } from "$lib/routes";
+
+    import { onMount } from "svelte";
+
+    import SetName from "$lib/Forms/SignInComponents/SetName.svelte";
+    import SetEmail from "$lib/Forms/SignInComponents/SetEmail.svelte";
+    import SetPassword from "$lib/Forms/SignInComponents/SetPassword.svelte";
+
+    let name = "";
+    let email = "";
+    let password = "";
+
+    var dispatch = createEventDispatcher();
+
+    onMount(() => {
+        scrolls.update(() => false);
+    });
+
+    //stage starts from 0 to 3 where stage 3 sends POST request
+    //to the server with the info gathered through stage 0 to 2.
+    //initialized at stage 0.
+    $: stage = 0;
+
+    function resetName(e) {
+        name = e.detail.name;
+        stage = e.detail.stage;
+        console.log("name reset:", name);
+    }
+
+    function resetEmail(e) {
+        email = e.detail.email;
+        stage = e.detail.stage;
+        console.log("email reset:", email);
+    }
+
+    function resetPassword(e) {
+        password = e.detail.password;
+        stage = e.detail.stage;
+        console.log("password reset:", password);
+    }
+
+    function goBackHandler(e) {
+        stage = e.detail.stage;
+        console.log("going back from password stage");
+    }
+
+    $: {
+        if (stage == 3) {
+            setTimeout(() => {
+                dispatch("mode", {
+                    signIn: false,
+                });
+            }, 5000);
+        }
+    }
+</script>
+
+<div class="wrapper">
+    <div class="content-wrap">
+        <div class="signin-container">
+            {#if stage == 0}
+                <SetName on:userName={resetName} {name} {stage} />
+            {:else if stage == 1}
+                <SetEmail on:userEmail={resetEmail} {email} {stage} />
+            {:else if stage == 2}
+                <SetPassword
+                    on:userPassword={resetPassword}
+                    {stage}
+                    on:goBack={goBackHandler}
+                />
+            {:else}
+                <h3>WELCOME TO</h3>
+                <img src="/icons/svgs/Jae.svg" height="60" />
+            {/if}
+        </div>
+    </div>
+</div>
+
 <style>
     .content-wrap {
         width: 300px;
         height: 500px;
-        border-radius: 2px;
+        border-radius: 14px;
         box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
         background-color: white;
         margin: 0;
         padding: 0;
-
     }
 
     /* style of login continer. centers all items inside */
@@ -21,7 +100,7 @@
         margin: 0;
         padding: 0;
     }
-    
+
     h3 {
         font-family: popLight;
         font-size: 25px;
@@ -29,88 +108,4 @@
         margin: 0;
         margin-bottom: 10px;
     }
-
-    
-
-    
-
-
 </style>
-
-<script>
-
-    import { createEventDispatcher } from 'svelte';
-    import { scrolls } from '$lib/store'; 
-
-    import SetName from "$lib/Forms/SignInComponents/SetName.svelte";
-    import SetEmail from "$lib/Forms/SignInComponents/SetEmail.svelte";
-    import SetPassword from "$lib/Forms/SignInComponents/SetPassword.svelte";
-    
-
-    let name = "";
-    let email = "";
-    let password = "";
-    
-    var dispatch = createEventDispatcher();
-
-    onMount(() => {
-		scrolls.update(() => false);
-	})
-    
-    //stage starts from 0 to 3 where stage 3 sends POST request
-    //to the server with the info gathered through stage 0 to 2.
-    //initialized at stage 0.
-    $: stage = 0;
-    
-
-    function resetName(e) {
-        name = e.detail.name;
-        stage = e.detail.stage;
-        console.log("name reset:", name);
-    }
-    
-    function resetEmail(e) {
-        email = e.detail.email;
-        stage = e.detail.stage;
-        console.log("email reset:", email);
-    }
-
-    function resetPassword(e) {
-        password = e.detail.password;
-        stage = e.detail.stage;
-        console.log("password reset:", password);
-    }
-    
-    function goBackHandler(e) {
-        stage = e.detail.stage;
-        console.log("going back from password stage")
-    }
-    
-    $: {
-        if (stage == 3) {
-            setTimeout(() => {
-                dispatch('mode', {
-                    signIn: false
-                })
-            }, 5000);
-        }
-    }
-
-    
-
-</script>
-
-<div class="content-wrap">
-    <div class="signin-container">
-        {#if stage == 0}
-            <SetName on:userName={resetName} name={name} stage={stage} />
-        {:else if stage == 1}
-            <SetEmail on:userEmail={resetEmail} email={email} stage={stage} />
-        {:else if stage == 2}
-            <SetPassword on:userPassword={resetPassword} stage={stage} on:goBack={goBackHandler} />
-        {:else}
-            <h3>WELCOME TO</h3>
-            <img src="/icons/svgs/Jae.svg" height="60">
-        {/if}
-    </div>
-</div>

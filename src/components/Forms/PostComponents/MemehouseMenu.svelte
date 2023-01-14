@@ -114,7 +114,6 @@
     }
 </script>
 
-{#if meme_house_open}
     <div
         class="meme-house-menu"
         in:slide={{ duration: 600, easing: quintOut }}
@@ -362,70 +361,6 @@
             <div class="requirement-wrap" />
         </div>
     </div>
-{/if}
-
-<div class="set-post-file-wrap">
-    <div class="container">
-        <div class="questionair-container">
-            {#if !file}
-                <h2>Share your piece of meme</h2>
-            {:else}
-                <h2>Such Memeful Beauty!</h2>
-            {/if}
-        </div>
-
-        {#if file}
-            <div class="preview-meme">
-                <img src={preview_src} width="150px" height="150px" />
-            </div>
-        {:else}
-            <div class="form-wrap">
-                <div class="upload-wrap">
-                    Choose from
-                    <div class="btn-container">
-                        <label
-                            class="upload-btn-from-device"
-                            for="file"
-                            on:click={initHandler}
-                        >
-                            <h4 class="label-device">Gallery</h4>
-                        </label>
-                    </div>
-                    <div class="btn-container">
-                        <div
-                            class="upload-btn-from-memehouse"
-                            on:click={callToMemeHouse}
-                        >
-                            <label class="label-memehouse"> Meme House </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="field-wrap">
-                    <input
-                        id="file"
-                        type="file"
-                        name="file"
-                        class="file-field"
-                        bind:files={file}
-                    />
-                </div>
-            </div>
-        {/if}
-    </div>
-</div>
-
-<div class="sub-navbar-wrap">
-    <div class="sub-navbar-left">
-        {#if file}
-            <button class="nav-left" on:click={initHandler} />
-        {/if}
-    </div>
-    <div class="sub-navbar-right">
-        {#if stage == 0 && file}
-            <button class="nav-right" on:click={bubbleUpFile} />
-        {/if}
-    </div>
-</div>
 
 <style>
     .set-post-file-wrap {
@@ -530,7 +465,7 @@
         justify-content: center;
         flex-direction: column;
         align-items: center;
-        width: 65%;
+        width: 80%;
         height: 40%;
         font-size: 20px;
         text-align: center;
@@ -817,3 +752,4 @@
         height: 100%;
     }
 </style>
+

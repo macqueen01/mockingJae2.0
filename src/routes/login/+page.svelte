@@ -1,6 +1,7 @@
 <script>
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { scrolls } from '$lib/routes'; 
+	import { scrolls } from '$lib/routes';
+	import{ goto }from '$app/navigation'; 
 
 	var dispatch = createEventDispatcher();
 
@@ -13,10 +14,7 @@
 
 
 	function switchToSignIn() {
-		console.log('switching to signIn');
-		dispatch('mode', {
-			signIn: true
-		});
+		goto("/signin");
 	}
 
 
@@ -87,7 +85,7 @@
 	.content-wrap {
 		width: 300px;
 		height: 500px;
-		border-radius: 2px;
+		border-radius: 14px;
 		box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
 		background-color: white;
 		margin: 0;
