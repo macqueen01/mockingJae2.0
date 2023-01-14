@@ -4,7 +4,7 @@
     export let active = false;
     export let status = 0;
 
-    $: console.log(active)
+    $: console.log(active, status)
 
 </script>
 
