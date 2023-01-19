@@ -1,10 +1,12 @@
 <script>
+    import { fade } from 'svelte/transition';
+
     export let loaded;
 </script>
 
 <div class={loaded ? "scroll-view" : "scroll-view-loading"}>
     <div class="loading" class:loaded>
-        <img src="/icons/svgs/Me.svg" height="50" alt="JAE" />
+        <img src="/icons/svgs/Me.svg" height="50" alt="JAE" in:fade={{ delay: 300, duration: 400, opacity: 0 }} />
     </div>
     <slot>
         <div class="view" />

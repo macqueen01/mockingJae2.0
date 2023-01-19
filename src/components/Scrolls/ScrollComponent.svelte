@@ -97,7 +97,9 @@
 
 		const buffer = await hashToTar(hash);
 
+		/*
 		setScrollsData(result.data.id, buffer);
+		*/
 
 		const blobData = await bufferToBlobs(buffer);
 
@@ -229,6 +231,14 @@
 		let img_blobs = [];
 		let data_blobs = [];
 
+		const fetchedResult = await fetchScrolls(scrolls_id);
+
+		urlList = fetchedResult.urlList;
+		img_blobs = fetchedResult.img_blobs;
+		data_blobs = fetchedResult.data_blobs;
+
+		/*
+
 		if (window.localStorage.getItem(`${scrolls_id}`) == null) {
 			const fetchedResult = await fetchScrolls(scrolls_id);
 
@@ -244,6 +254,8 @@
 			img_blobs = blobData.img_blobs;
 			data_blobs = blobData.data_blobs;
 		}
+
+		*/
 
 		const images = preload(urlList);
 		_images.setImages(images);
@@ -338,11 +350,13 @@
 		}
 	}
 
+	/*
 	$: {
 		if (!focus && startY != 0) {
 			setTimeout(cleanMemory(), 60000);
 		}
 	}
+	*/
 
 	function getFrameIndex() {
 		if (canvas && _images && standardHeight) {
@@ -365,7 +379,6 @@
 			ratio: ratio,
 		};
 	}
-
 
 	// Following tools only intervene in the local storage
 	// used to convert the data to blob and store it in the local storage

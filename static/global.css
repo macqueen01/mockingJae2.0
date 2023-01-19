@@ -64,6 +64,13 @@ body {
 	position: relative;
 	width: 100%;
 	height: calc(var(--vh, 1vh) * 100);
+	background-color: var(--mkj-background-color);
+	transition: all 0.3s;
+}
+
+main {
+	background-color: var(--mkj-background-color);
+	transition: all 0.3s;
 }
 
 body {
@@ -86,6 +93,18 @@ html {
 	/* IE and Edge */
 	scrollbar-width: none;
 	/* Firefox */
+}
+
+.content-wrap {
+	width: 300px;
+	height: 500px;
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+	--smooth-corners: 20, 30;
+	mask-image: paint(smooth-corners);
+	-webkit-mask-image: paint(smooth-corners);
+	background-color: white;
+	margin: 0;
+	padding: 0;
 }
 
 .wrapper {

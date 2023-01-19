@@ -1,5 +1,6 @@
 <script>
 	import { createEventDispatcher, onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
 	import { scrolls } from '$lib/routes';
 	import{ goto }from '$app/navigation'; 
 
@@ -10,6 +11,8 @@
 
 	onMount(() => {
 		scrolls.update(() => false);
+
+		document.documentElement.style.setProperty('--mkj-background-color', `#59545f`);
 	})
 
 
@@ -21,7 +24,7 @@
 </script>
 
 <div class="wrapper">
-	<div class="content-wrap">
+	<div class="content-wrap" in:fade={{ delay: 300, duration: 400, opacity: 0 }}>
 		<div class="login-container">
 			<div class="login-wrap">
 				<div class="login">
