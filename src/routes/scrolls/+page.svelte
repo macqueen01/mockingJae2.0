@@ -5,6 +5,9 @@
 
 	onMount(() => {
 		scrolls.update(() => true);
+
+		// this is color setting
+		document.documentElement.style.setProperty('--mkj-background-color', `black`);
 	});
 
 	let common_dir = 'http://localhost:5173/sequences/';
@@ -105,7 +108,7 @@
 		height: 100vh;
 		position: fixed;
 		left: 0;
-		z-index: 8;
+		z-index: 3;
 	}
 	
 	.home-wrap {
@@ -122,7 +125,7 @@
 	}
 
 	:global(body, html, main) {
-		background-color: black;
+		background-color: var(--mkj-background-color);
 	}
 
 

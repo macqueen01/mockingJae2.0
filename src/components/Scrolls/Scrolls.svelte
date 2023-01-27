@@ -1,5 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
+    import { fade } from 'svelte/transition';
     import ScrollComponent from "./ScrollComponent.svelte";
     import ScrollLoader from "./ScrollLoader.svelte";
     

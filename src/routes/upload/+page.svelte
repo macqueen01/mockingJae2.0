@@ -4,6 +4,7 @@
 
 	import SetScrollsTitle from '$lib/Forms/PostComponents/SetScrollsTitle.svelte';
 	import SetScrollsFile from '$lib/Forms/PostComponents/SetScrollsFile.svelte';
+    import { onMount } from 'svelte';
 
 	let _title = '';
 	let _file = '';
@@ -12,6 +13,10 @@
 	let is_local = false;
 
 	var dispatch = createEventDispatcher();
+
+	onMount(() => {
+		document.documentElement.style.setProperty('--mkj-background-color', `#59545f`);
+	})
 
 	//stage starts from 0 to 3 where stage 3 sends POST request
 	//to the server with the info gathered through stage 0 to 2.

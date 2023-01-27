@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<link rel="stylesheet" href="%sveltekit.assets%/global.css" />
-		<meta name="viewport" content="width=device-width" />
-		<script>
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+	<link rel="stylesheet" href="%sveltekit.assets%/global.css" />
+	<meta name="viewport" content="width=device-width" />
+
+
+
+	<script>
+
+		if (CSS && 'paintWorklet' in CSS) CSS.paintWorklet.addModule('/src/assets/paint.js')
+
+		
+
 		/*
 			
 			function setHeight() {
 				let vh = window.innerHeight * 0.01;
-  				document.documentElement.style.setProperty('--vh', `${vh}px`);
+					document.documentElement.style.setProperty('--vh', `${vh}px`);
 			}
 
 			window.addEventListener('resize', () => {
@@ -20,10 +29,12 @@
 			setHeight();
 		*/
 
-		</script>
-		%sveltekit.head%
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
-	</body>
+	</script>
+	%sveltekit.head%
+</head>
+
+<body data-sveltekit-preload-data="hover">
+	<div style="display: contents">%sveltekit.body%</div>
+</body>
+
 </html>

@@ -1,5 +1,6 @@
 <script>
     import { page } from "$app/stores";
+
 </script>
 
 <div class="wrapper">
@@ -15,15 +16,6 @@
 </div>
 
 <style>
-    .content-wrap {
-        width: 300px;
-        height: 500px;
-        border-radius: 14px;
-        box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
-        background-color: white;
-        margin: 0;
-        padding: 0;
-    }
 
     /* style of login continer. centers all items inside */
     .error-container {
@@ -70,5 +62,4 @@
         text-align: center;
         top: 150px;
     }
-
 </style>

@@ -14,16 +14,16 @@
 
 <div class="panel-container" class:panelscrolls>
 	<div class="panel-wrap">
-		<a>
+		<a href="/scrolls">
 			<HomeIcon size={28} color={panelscrolls ? '#f5f5f5' : '#59545f'} />
 		</a>
-		<a>
+		<a href="/upload">
 			<AddIcon size={28} color={panelscrolls ? '#f5f5f5' : '#59545f'} />
 		</a>
-		<a>
+		<a href="/scrolls">
 			<GlobalIcon size={28} color={panelscrolls ? '#f5f5f5' : '#59545f'} />
 		</a>
-		<a>
+		<a href="/login">
 			<LockedIcon size={28} color={panelscrolls ? '#f5f5f5' : '#59545f'} />
 		</a>
 	</div>
